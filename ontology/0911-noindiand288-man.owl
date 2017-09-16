@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns="http://www.owl-ontologies.com/law02122017.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+  xml:base="http://www.owl-ontologies.com/law02122017.owl">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/3.3/swrla.owl"/>
+    <owl:imports rdf:resource="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="Victim"/>
+  <owl:Class rdf:ID="Party">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Actor"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="TransferIntent">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="SubjectiveElement"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Act_is_a_lawful_defense">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Justification"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="CrimeSucceed">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Action"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="ElementOfCrime"/>
+  <owl:Class rdf:ID="Offender">
+    <rdfs:subClassOf rdf:resource="#Actor"/>
+  </owl:Class>
+  <owl:Class rdf:ID="LessThanFifthteenYears">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="CriminalImpunity"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Necessity">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Entrapment">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="MentalInfirmly">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="IntentionallyAct">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Intention"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="MakingDecision">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Committed">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Causation"/>
+  <owl:Class rdf:ID="No_Intention">
+    <rdfs:subClassOf rdf:resource="#SubjectiveElement"/>
+  </owl:Class>
+  <owl:Class rdf:ID="NoCriminalImpunity">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Intoxication">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="AdditionalDetail"/>
+  <owl:Class rdf:ID="ActWithOrder">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ObjectiveElement"/>
+  <owl:Class rdf:ID="Danger">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="RelationWithVictim"/>
+  <owl:Class rdf:ID="Negligence">
+    <rdfs:subClassOf rdf:resource="#SubjectiveElement"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Danger_to_be_imminent">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="HusbandAgainstHisWife">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="RelatedArticle"/>
+  <owl:Class rdf:about="#Intention">
+    <rdfs:subClassOf rdf:resource="#SubjectiveElement"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Defending_own_right">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Preparing">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+  </owl:Class>
+  <owl:Class rdf:ID="VictimDetail"/>
+  <owl:Class rdf:ID="Assent">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="No_justification">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Considering">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+  </owl:Class>
+  <owl:Class rdf:ID="ForeseenTheEffect">
+    <rdfs:subClassOf rdf:resource="#Intention"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Attemp">
+    <rdfs:subClassOf rdf:resource="#Action"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Innocent">
+    <rdfs:subClassOf rdf:resource="#Actor"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Defending">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="has_parties"/>
+  <owl:ObjectProperty rdf:ID="has_defending">
+    <rdfs:domain rdf:resource="#Defending"/>
+    <rdfs:range rdf:resource="#Defending_own_right"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_victim">
+    <rdfs:domain rdf:resource="#ObjectiveElement"/>
+    <rdfs:range rdf:resource="#Victim"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_action">
+    <rdfs:domain rdf:resource="#ObjectiveElement"/>
+    <rdfs:range rdf:resource="#Action"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_addtional">
+    <rdfs:domain rdf:resource="#ObjectiveElement"/>
+    <rdfs:range rdf:resource="#AdditionalDetail"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="take">
+    <rdfs:range rdf:resource="#Action"/>
+    <rdfs:domain rdf:resource="#Actor"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="related_with_causation">
+    <rdfs:range rdf:resource="#Causation"/>
+    <rdfs:domain rdf:resource="#SubjectiveElement"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_danger">
+    <rdfs:domain rdf:resource="#Defending"/>
+    <rdfs:range rdf:resource="#Danger"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_causation">
+    <rdfs:domain rdf:resource="#ElementOfCrime"/>
+    <rdfs:range rdf:resource="#Causation"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_victim_detail">
+    <rdfs:domain rdf:resource="#Victim"/>
+    <rdfs:range rdf:resource="#VictimDetail"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_rwv">
+    <rdfs:domain rdf:resource="#Actor"/>
+    <rdfs:range rdf:resource="#RelationWithVictim"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="deciding">
+    <rdfs:range rdf:resource="#RelatedArticle"/>
+    <rdfs:domain rdf:resource="#CriminalImpunity"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="with">
+    <rdfs:domain rdf:resource="#Action"/>
+    <rdfs:range rdf:resource="#Victim"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_actor">
+    <rdfs:range rdf:resource="#Actor"/>
+    <rdfs:domain rdf:resource="#ObjectiveElement"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="related_with_subjective_element">
+    <rdfs:range rdf:resource="#SubjectiveElement"/>
+    <rdfs:domain rdf:resource="#ObjectiveElement"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_subjective_of_element">
+    <rdfs:domain rdf:resource="#ElementOfCrime"/>
+    <rdfs:range rdf:resource="#SubjectiveElement"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_danger_imn">
+    <rdfs:domain rdf:resource="#Defending"/>
+    <rdfs:range rdf:resource="#Danger_to_be_imminent"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_lawful_def">
+    <rdfs:domain rdf:resource="#Defending"/>
+    <rdfs:range rdf:resource="#Act_is_a_lawful_defense"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="consider_justification">
+    <rdfs:domain rdf:resource="#ElementOfCrime"/>
+    <rdfs:range rdf:resource="#Justification"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_objective_of_element">
+    <rdfs:domain rdf:resource="#ElementOfCrime"/>
+    <rdfs:range rdf:resource="#ObjectiveElement"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="consider_criminal_impunity">
+    <rdfs:range rdf:resource="#CriminalImpunity"/>
+    <rdfs:domain rdf:resource="#ElementOfCrime"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="with_additional">
+    <rdfs:range rdf:resource="#AdditionalDetail"/>
+    <rdfs:domain rdf:resource="#Victim"/>
+  </owl:ObjectProperty>
+  <RelatedArticle rdf:ID="Section294"/>
+  <RelatedArticle rdf:ID="Section293"/>
+  <RelatedArticle rdf:ID="Section288"/>
+  <RelatedArticle rdf:ID="Section296"/>
+  <RelatedArticle rdf:ID="Section295"/>
+  <RelatedArticle rdf:ID="Section298-paragraph2"/>
+  <RelatedArticle rdf:ID="Section290-paragraph2"/>
+  <RelatedArticle rdf:ID="Section298-paragraph1"/>
+  <RelatedArticle rdf:ID="Section290-paragraph1"/>
+  <RelatedArticle rdf:ID="Section297"/>
+  <RelatedArticle rdf:ID="Section292"/>
+  <RelatedArticle rdf:ID="Section291"/>
+  <RelatedArticle rdf:ID="Section289"/>
+  <RelatedArticle rdf:ID="Section300"/>
+  <RelatedArticle rdf:ID="Section299"/>
+
+
+
+  <RelationWithVictim rdf:ID="rvm_by_action"/>
+  <VictimDetail rdf:ID="lessthan16yr"/>
+  <Assent rdf:ID="Assent01"/>
+  <Negligence rdf:ID="Negli_intention"/>
+  <Necessity rdf:ID="Necessity_ins"/>
+  <AdditionalDetail rdf:ID="killParent"/>
+  
+<LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"/>
+<RelationWithVictim rdf:ID="rvm_by_contact"/>
+<Committed rdf:ID="Commit"/>
+<Entrapment rdf:ID="Entrapment_ins"/>
+<No_Intention rdf:ID="No_Intention_obj"/>
+<MentalInfirmly rdf:ID="MentalInfirmly_ins"/>
+<RelationWithVictim rdf:ID="rvm_by_law"/>
+<Intoxication rdf:ID="Intoxication_ins"/>
+<CrimeSucceed rdf:ID="harm"/>
+<CrimeSucceed rdf:ID="encourage"/>
+<CrimeSucceed rdf:ID="fighting"/>
+<CrimeSucceed rdf:ID="hitting"/>
+<HusbandAgainstHisWife rdf:ID="HusbandAgainstHisWife_ins"/>
+<VictimDetail rdf:ID="group_morethan3"/>
+<VictimDetail rdf:ID="NoVictimDetail"/>
+<Causation rdf:ID="victimdied"/>
+<Causation rdf:ID="seriously_injured"/>
+<Causation rdf:ID="injured"/>
+<AdditionalDetail rdf:ID="Noadd"/>
+<VictimDetail rdf:ID="NoVictimDetail"/>
+<AdditionalDetail rdf:ID="Noadd"/>
+<IntentionallyAct rdf:ID="IntentionAct"/>
+<No_justification rdf:ID="No_just"/>
+<NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
+
+
+
+<InputData>
+<Victim rdf:ID="MissC">
+  <has_victim_detail rdf:resource="#NoVictimDetail"/>
+  <with_additional rdf:resource="#Noadd"/>
+</Victim>
+<Offender rdf:ID="Petch">
+  <take>
+    <Considering rdf:ID="Consider">
+      <with rdf:resource="#MissC"/>
+    </Considering>
+  </take>
+</Offender>
+<ObjectiveElement rdf:ID="ObjElem288">
+  <has_actor rdf:resource="#Petch"/>
+  <has_action rdf:resource="#Consider"/>
+  <has_victim rdf:resource="#MissC"/>
+  <has_addtional rdf:resource="#Noadd"/>
+  <related_with_subjective_element rdf:resource="#IntentionAct"/>
+</ObjectiveElement>
+
+<ElementOfCrime rdf:ID="eoc288">
+  <consider_criminal_impunity rdf:resource="#NoCriminalImpunity_ins"/>
+  <consider_justification rdf:resource="#No_just"/>
+  <has_subjective_of_element rdf:resource="#IntentionAct"/>
+  <has_objective_of_element rdf:resource="#ObjElem288"/>
+  <has_causation rdf:resource="#victimdied"/>
+</ElementOfCrime>
+</InputData>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

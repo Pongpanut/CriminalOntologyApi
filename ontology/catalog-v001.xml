@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="0911-noindi.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="0911-noindiand288-man.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="0911-noindiand288.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="0911-norule.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="0911-original.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="0911.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="destination.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1505403359000" name="duplicate:http://www.owl-ontologies.com/law02122017.owl" uri="testing.owl"/>
+    </group>
+</catalog>
