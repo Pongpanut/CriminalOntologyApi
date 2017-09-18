@@ -233,6 +233,7 @@
 <Intoxication rdf:ID="Intoxication_ins"/>
 <CrimeSucceed rdf:ID="harm"/>
 <CrimeSucceed rdf:ID="encourage"/>
+<CrimeSucceed rdf:ID="becruel"/>
 <CrimeSucceed rdf:ID="fighting"/>
 <CrimeSucceed rdf:ID="hitting"/>
 <HusbandAgainstHisWife rdf:ID="HusbandAgainstHisWife_ins"/>
@@ -243,9 +244,9 @@
 <Causation rdf:ID="injured"/>
 <AdditionalDetail rdf:ID="Noadd"/>
 <VictimDetail rdf:ID="NoVictimDetail"/>
-<AdditionalDetail rdf:ID="Noadd"/>
+<AdditionalDetail rdf:ID="VictimKillThemSelf"/>
 <IntentionallyAct rdf:ID="IntentionAct"/>
 <No_justification rdf:ID="No_just"/>
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 
-<Victim rdf:ID="missc"><has_victim_detail rdf:resource="#NoVictimDetail"/><with_additional rdf:resource="#killParent"/></Victim><Offender rdf:ID="petch"><take><Considering rdf:ID="Consider"><with rdf:resource="#missc"/></Considering></take></Offender><ObjectiveElement rdf:ID="ObjElem288"><has_actor rdf:resource="#petch"/><has_action rdf:resource="#Consider"/><has_victim rdf:resource="#missc"/><has_addtional rdf:resource="#killParent"/><related_with_subjective_element rdf:resource="#No_Intention_obj"/></ObjectiveElement><ElementOfCrime rdf:ID="eoc288"><consider_criminal_impunity rdf:resource="#NoCriminalImpunity_ins"/><consider_justification rdf:resource="#No_just"/><has_subjective_of_element rdf:resource="#No_Intention_obj"/><has_objective_of_element rdf:resource="#ObjElem288"/><has_causation rdf:resource="#victimdied"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<Victim rdf:ID="missc"><has_victim_detail rdf:resource="#group_morethan3"/><with_additional rdf:resource="#Noadd"/></Victim><Offender rdf:ID="petch"><take><CrimeSucceed rdf:ID="harm"><with rdf:resource="#missc"/></CrimeSucceed></take></Offender><ObjectiveElement rdf:ID="ObjElem288"><has_actor rdf:resource="#petch"/><has_action rdf:resource="#harm"/><has_victim rdf:resource="#missc"/><has_addtional rdf:resource="#Noadd"/><related_with_subjective_element rdf:resource="#Negli_intention"/></ObjectiveElement><ElementOfCrime rdf:ID="eoc288"><consider_criminal_impunity rdf:resource="#NoCriminalImpunity_ins"/><consider_justification rdf:resource="#No_just"/><has_subjective_of_element rdf:resource="#Negli_intention"/><has_objective_of_element rdf:resource="#ObjElem288"/><has_causation rdf:resource="#seriously_injured"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

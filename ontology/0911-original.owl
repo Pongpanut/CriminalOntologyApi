@@ -246,6 +246,7 @@
 <Intoxication rdf:ID="Intoxication_ins"/>
 <CrimeSucceed rdf:ID="harm"/>
 <CrimeSucceed rdf:ID="encourage"/>
+<CrimeSucceed rdf:ID="becruel"/>
 <CrimeSucceed rdf:ID="fighting"/>
 <CrimeSucceed rdf:ID="hitting"/>
 <HusbandAgainstHisWife rdf:ID="HusbandAgainstHisWife_ins"/>
@@ -256,7 +257,7 @@
 <Causation rdf:ID="injured"/>
 <AdditionalDetail rdf:ID="Noadd"/>
 <VictimDetail rdf:ID="NoVictimDetail"/>
-<AdditionalDetail rdf:ID="Noadd"/>
+<AdditionalDetail rdf:ID="VictimKillThemSelf"/>
 <IntentionallyAct rdf:ID="IntentionAct"/>
 <No_justification rdf:ID="No_just"/>
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
