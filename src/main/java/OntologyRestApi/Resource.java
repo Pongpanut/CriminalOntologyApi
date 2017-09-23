@@ -123,7 +123,14 @@ public class Resource {
                         ,@QueryParam("actIsLawful") String actIsLawful
                         ,@QueryParam("dangerToBeImminent") String dangerToBeImminent
                         ,@QueryParam("danger") String danger
-                        ,@QueryParam("nojust") String nojust){
+                        ,@QueryParam("nojust") String nojust
+                        ,@QueryParam("hasforeeffect") String hasforeeffect
+                        ,@QueryParam("hasintact") String hasIntAct
+                        ,@QueryParam("hasreaact") String hasReaAct
+                        ,@QueryParam("hasreacau") String hasReaCau
+                        ,@QueryParam("hasintentother") String hasIntentOther
+                        ,@QueryParam("hasactheedless") String hasActHeedless
+                        ,@QueryParam("hasactheedlesseng") String hasActHeedLessEng){
 
         ReqModel req = new ReqModel();
         req.setNojust(nojust);
@@ -164,6 +171,15 @@ public class Resource {
         req.setDangerToBeImminent(dangerToBeImminent);
         req.setDanger(danger);
 
+        // Intention
+        req.setHasforeeffect(hasforeeffect);
+        req.setHasintact(hasIntAct);
+        req.setHasreaact(hasReaAct);
+        req.setHasReaCau(hasReaCau);
+        req.setHasIntentOther(hasIntentOther);
+        req.setHasActHeedless(hasActHeedless);
+        req.setHasActHeedlessEng(hasActHeedLessEng);
+
         BuildNewOWL(req);
 
         String Ans = getData();
@@ -171,12 +187,13 @@ public class Resource {
     }
 
 
-    public static void BuildNewOWL(ReqModel input)
+    public void BuildNewOWL(ReqModel input)
     {
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse("ontology/0911-original.owl");
+            //Document doc = docBuilder.parse("ontology/0911-original.owl");
+            Document doc = docBuilder.parse("ontology/2309-original.owl");
 
             // Get the staff element by tag name directly
             Node rootNode = doc.getElementsByTagName("rdf:RDF").item(0);
@@ -208,6 +225,8 @@ public class Resource {
             Element has_sub = doc.createElement("has_subjective_of_element");
             Element has_obj = doc.createElement("has_objective_of_element");
             Element has_cau = doc.createElement("has_causation");
+
+            // intention
 
 
             //VICTIM
@@ -260,6 +279,52 @@ public class Resource {
                 has_actor.setAttribute("rdf:resource","#"+input.getOffender());
             }
 
+            // Gathering intention
+            String hasintact = "";
+            String hasforeeffect = "";
+            String hasreaact = "";
+            String hasReaCau = "";
+            String hasIntentOther = "";
+            String hasActHeedless = "";
+            String hasActHeedlessEng = "";
+            if(input.getHasforeeffect() != null) {
+                hasforeeffect = input.getHasforeeffect();
+            }
+            if(input.getHasintact() != null) {
+                hasintact = input.getHasintact();
+            }
+            if(input.getHasreaact() != null) {
+                hasreaact = input.getHasreaact();
+            }
+            if(input.getHasReaCau() != null) {
+                hasReaCau = input.getHasReaCau();
+            }
+            if(input.getHasIntentOther() != null) {
+                hasIntentOther = input.getHasIntentOther();
+            }
+            if(input.getHasActHeedless() != null) {
+                hasActHeedlessEng = input.getHasActHeedless();
+            }
+            if(input.getHasActHeedlessEng() != null) {
+                hasActHeedlessEng = input.getHasActHeedlessEng();
+            }
+
+            String hasIntention = this.findIntention(hasintact,hasforeeffect, hasreaact ,hasReaCau,hasActHeedless,hasActHeedlessEng ,hasIntentOther);
+
+            System.out.println(hasIntention);
+
+            if(hasIntention == "intentionx"){
+                has_sub.setAttribute("rdf:resource","#Intentionx");
+                rwse.setAttribute("rdf:resource","#Intentionx");
+            }
+            else if (hasIntention == "Negligence"){
+                has_sub.setAttribute("rdf:resource","#Negli_intention");
+                rwse.setAttribute("rdf:resource","#Negli_intention");
+            }
+
+
+            // Finish Gathering intention
+
 
             //OBJECTIVE ELEMENT
             has_obj.setAttribute("rdf:resource","#ObjElem288");
@@ -288,12 +353,11 @@ public class Resource {
                 has_cau.setAttribute("rdf:resource","#"+input.getCausation() );
             }
 
-
             // Subjective element
-            if(input.getIntentionallyAct() != null){
-                has_sub.setAttribute("rdf:resource","#"+input.getIntentionallyAct());
-                rwse.setAttribute("rdf:resource","#"+input.getIntentionallyAct());
-            }
+//            if(input.getIntentionallyAct() != null){
+//                has_sub.setAttribute("rdf:resource","#"+input.getIntentionallyAct());
+//                rwse.setAttribute("rdf:resource","#"+input.getIntentionallyAct());
+//            }
 
             if(input.getNoIntention() != null){
                 has_sub.setAttribute("rdf:resource","#"+input.getNoIntention());
@@ -340,6 +404,114 @@ public class Resource {
         }
     }
 
+    public String findIntention( String hasintact,String hasforeeffect,String  hasreaact ,String hasReaCau,String hasActHeedless,String hasActHeedlessEng ,String hasIntentOther){
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse("ontology/2309-original.owl");
+
+            Element obj_elem = doc.createElement("ObjectiveElement");
+            Element has_fore_effect = doc.createElement("has_fore_effect");
+            Element has_int_act = doc.createElement("has_int_act");
+            Element has_rea_act = doc.createElement("has_rea_act");
+            Element has_rea_cau = doc.createElement("has_rea_cau");
+            Element has_act_heedless = doc.createElement("has_act_heedless");
+            Element has_act_heedless_eng = doc.createElement("has_act_heedless_eng");
+            Element has_intent_other = doc.createElement("has_intent_other");
+
+            obj_elem.setAttribute("rdf:ID","ObjElem288");
+
+            if(hasintact != "")
+                has_int_act.setAttribute("rdf:resource","#"+hasintact);
+            if(hasforeeffect != "")
+                has_fore_effect.setAttribute("rdf:resource","#"+hasforeeffect);
+            if(hasreaact != "")
+                has_rea_act.setAttribute("rdf:resource","#"+hasreaact);
+            if(hasReaCau != "")
+                has_rea_cau.setAttribute("rdf:resource","#"+hasReaCau);
+            if(hasActHeedless != "")
+                has_act_heedless.setAttribute("rdf:resource","#"+hasActHeedless);
+            if(hasActHeedlessEng != "")
+                has_act_heedless_eng.setAttribute("rdf:resource","#"+hasActHeedlessEng);
+            if(hasIntentOther != "")
+                has_intent_other.setAttribute("rdf:resource","#"+hasIntentOther);
+
+            obj_elem.appendChild(has_fore_effect);
+            obj_elem.appendChild(has_int_act);
+            obj_elem.appendChild(has_rea_act);
+            obj_elem.appendChild(has_rea_cau);
+            obj_elem.appendChild(has_act_heedless);
+            obj_elem.appendChild(has_act_heedless_eng);
+            obj_elem.appendChild(has_intent_other);
+
+            Node rootNode = doc.getElementsByTagName("rdf:RDF").item(0);
+            rootNode.appendChild(obj_elem);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("ontology/intention.owl"));
+            transformer.transform(source, result);
+
+            try {
+                OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+                OWLOntology ontology2 = ontologyManager.loadOntologyFromOntologyDocument(new File("ontology/intention.owl"));
+
+                // Create SQWRL query engine using the SWRLAPI
+                SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology2);
+
+                queryEngine.createSQWRLQuery("Intention-act","has_rea_act(?x, ?a) ^ has_rea_cau(?x, ?b) ^ has_int_act(?x, ?c) ^ sameAs(?e, Intentionx) ^ Intention(Intentionx) ->  sqwrl:select(?x, ?e)");
+                queryEngine.createSQWRLQuery("Intention-foreseen","has_rea_act(?x, ?a) ^ has_rea_cau(?x, ?b) ^ has_fore_effect(?x, ?d) ^ sameAs(?e, Intentionx) ^ Intention(Intentionx) ->  sqwrl:select(?x,?e)");
+                queryEngine.createSQWRLQuery("Negligence1","has_act_heedless_eng(?x, ?b) ^ sameAs(?e, Negli_intention) ^ Negligence(Negli_intention)->  sqwrl:select(?x, ?b)");
+                queryEngine.createSQWRLQuery("Negligence2","has_act_heedless(?x, ?a) ^ sameAs(?e, Negli_intention) ^ Negligence(Negli_intention)->  sqwrl:select(?x, ?a)");
+                queryEngine.createSQWRLQuery("transfer-intent","has_intent_other(?x,?c) ^ sameAs(?e, Intentionx) ^ Intention(Intentionx) ->  sqwrl:select(?x, ?e)");
+                SQWRLResult Intention = queryEngine.runSQWRLQuery("Intention-act");
+                SQWRLResult foreseen = queryEngine.runSQWRLQuery("Intention-foreseen");
+
+                if (Intention.next() || foreseen.next()) {
+                    SQWRLResult transferIntentIntact = queryEngine.runSQWRLQuery("transfer-intent");
+                    if (transferIntentIntact.next())
+                        return "TransferIntent";
+                     else
+                        return "intentionx";
+                }
+
+                if(!Intention.next() && !foreseen.next()) {
+                    SQWRLResult negligence1 = queryEngine.runSQWRLQuery("Negligence1");
+                    SQWRLResult negligence2 = queryEngine.runSQWRLQuery("Negligence2");
+                    if(negligence1.next() || negligence2.next())
+                        return "Negligence";
+                }
+
+
+            } catch (OWLOntologyCreationException e) {
+                System.err.println("Error creating OWL ontology: " + e.getMessage());
+                System.exit(-1);
+            } catch (SWRLParseException e) {
+                System.err.println("Error parsing SWRL rule or SQWRL query: " + e.getMessage());
+                System.exit(-1);
+            } catch (SQWRLException e) {
+                System.err.println("Error running SWRL rule or SQWRL query: " + e.getMessage());
+                System.exit(-1);
+            } catch (RuntimeException e) {
+
+                System.exit(-1);
+                System.err.println("Error starting application: " + e.getMessage());
+            }
+
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        } catch (TransformerException tfe) {
+            tfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (SAXException sae) {
+            sae.printStackTrace();
+        }
+        return "No intention";
+    }
+
+
     public String getData() {
 
         String ans = "";
@@ -351,20 +523,14 @@ public class Resource {
             // Create SQWRL query engine using the SWRLAPI
             SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
-            // Create and execute a SQWRL query using the SWRLAPI
-            queryEngine.createSQWRLQuery("sec288", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ has_addtional(?k, Noadd) ^ has_victim_detail(?j, NoVictimDetail) ^ IntentionallyAct(?x) ^  sameAs(?e, Section288) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?x, ?e)");
-            queryEngine.createSQWRLQuery("sec289", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ IntentionallyAct(?x) ^ with_additional(?j, killParent) ^ sameAs(?e, Section289) ^ RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e)");
+           // queryEngine.createSQWRLQuery("sec288-old", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ has_addtional(?k, Noadd) ^ has_victim_detail(?j, NoVictimDetail) ^ IntentionallyAct(?x) ^  sameAs(?e, Section288) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?x, ?e)");
+            queryEngine.createSQWRLQuery("sec288","consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, victimdied) ^  has_actor(?k, ?g) ^ has_action(?k, ?h) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^ related_with_subjective_element(?k, Intentionx)^ has_addtional(?k, Noadd) ^ Intention(Intentionx)  ^ has_victim_detail(?j, NoVictimDetail)  ^  sameAs(?e, Section288) ^ RelatedArticle(?e) -> sqwrl:select(?k, ?g, ?h, ?j, ?e)");
+            queryEngine.createSQWRLQuery("sec289", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z)  ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ IntentionallyAct(?x) ^ with_additional(?j, killParent) ^ sameAs(?e, Section289) ^ RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e)");
             queryEngine.createSQWRLQuery("sec290-para1", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?l) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, Noadd) ^ No_Intention(?l)  ^  sameAs(?e, Section290-paragraph1) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
             queryEngine.createSQWRLQuery("sec290-para2", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?l) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, killParent) ^ No_Intention(?l)  ^  sameAs(?e, Section290-paragraph2) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
             queryEngine.createSQWRLQuery("sec291", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?l) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, Noadd) ^ Negligence(?l) ^ sameAs(?e, Section291) ^  RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
-
-
-
             queryEngine.createSQWRLQuery("sec292", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?l) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, becruel)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, VictimKillThemSelf) ^ IntentionallyAct(?l) ^ has_victim_detail(?j, NoVictimDetail)^ sameAs(?e, Section292) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
             queryEngine.createSQWRLQuery("sec293", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?l) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, encourage) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, VictimKillThemSelf) ^ IntentionallyAct(?l) ^ has_victim_detail(?j, lessthan16yr)    ^ sameAs(?e, Section293) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e) ");
-
-
-
             queryEngine.createSQWRLQuery("sec294", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?l) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, Noadd) ^ IntentionallyAct(?l) ^ has_victim_detail(?j, group_morethan3) ^ sameAs(?e, Section294) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
             queryEngine.createSQWRLQuery("sec295", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, injured)           ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ has_addtional(?k, Noadd) ^ IntentionallyAct(?x) ^ has_victim_detail(?j, NoVictimDetail)  ^ sameAs(?e, Section295) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?x, ?e)");
             queryEngine.createSQWRLQuery("sec296", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, injured)           ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ with_additional(?j, killParent) ^ IntentionallyAct(?x) ^ has_victim_detail(?j, NoVictimDetail) ^ sameAs(?e, Section296) ^ RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e)");
@@ -372,7 +538,6 @@ public class Resource {
             queryEngine.createSQWRLQuery("sec298", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, seriously_injured) ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ with_additional(?j, killParent) ^ IntentionallyAct(?x) ^ has_victim_detail(?j, NoVictimDetail)^ sameAs(?e,  Section298-paragraph1) ^  RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e)");
             queryEngine.createSQWRLQuery("sec299", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, seriously_injured) ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, Noadd) ^ IntentionallyAct(?l)^  has_victim_detail(?j, group_morethan3) ^ sameAs(?e, Section299) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
             queryEngine.createSQWRLQuery("sec300", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?l) ^ has_causation(?n, seriously_injured) ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?l) ^ has_addtional(?k, Noadd) ^ Negligence(?l)^ sameAs(?e, Section300) ^  RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
-
 
             SQWRLResult resultSec288 = queryEngine.runSQWRLQuery("sec288");
             SQWRLResult resultSec289 = queryEngine.runSQWRLQuery("sec289");

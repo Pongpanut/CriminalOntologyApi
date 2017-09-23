@@ -1,3 +1,4 @@
 OntologyRestApi/App.class
 OntologyRestApi/model/ReqModel.class
+OntologyRestApi/CORSFilter.class
 OntologyRestApi/Resource.class

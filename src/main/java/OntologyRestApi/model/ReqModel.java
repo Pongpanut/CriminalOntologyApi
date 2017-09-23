@@ -38,6 +38,65 @@ public class ReqModel {
     private String dangerToBeImminent;
     private String danger;
 
+    // Intention
+    private String hasforeeffect;
+    private String hasintact;
+    private String hasreaact;
+    private String hasReaCau;
+    private String hasIntentOther;
+    private String hasActHeedless;
+    private String hasActHeedlessEng;
+
+    public String getHasIntentOther() {
+        return hasIntentOther;
+    }
+
+    public void setHasIntentOther(String hasIntentOther) {
+        this.hasIntentOther = hasIntentOther;
+    }
+
+    public String getHasActHeedless() {
+        return hasActHeedless;
+    }
+
+    public void setHasActHeedless(String hasActHeedless) {
+        this.hasActHeedless = hasActHeedless;
+    }
+
+    public String getHasActHeedlessEng() {
+        return hasActHeedlessEng;
+    }
+
+    public void setHasActHeedlessEng(String hasActHeedlessEng) {
+        this.hasActHeedlessEng = hasActHeedlessEng;
+    }
+
+    public  String getHasforeeffect() {
+        return hasforeeffect;
+    }
+
+    public void  setHasforeeffect(String hasforeeffect) {
+        this.hasforeeffect = hasforeeffect;
+    }
+    public String getHasintact() {
+        return hasintact;
+    }
+    public void   setHasintact(String hasintact) {
+        this.hasintact = hasintact;
+    }
+    public String getHasreaact() {
+        return hasreaact;
+    }
+    public void   setHasreaact(String hasreaact) {
+        this.hasreaact = hasreaact;
+    }
+    public String getHasReaCau() {
+        return hasReaCau;
+    }
+    public void   setHasReaCau(String hasReaCau) {
+        this.hasReaCau = hasReaCau;
+    }
+
     public String getNojust() {
         return nojust;
     }
