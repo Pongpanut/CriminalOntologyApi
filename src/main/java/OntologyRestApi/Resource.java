@@ -1,11 +1,6 @@
 package OntologyRestApi;
 
 //import org.checkerframework.checker.nullness.qual.NonNull;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.servlet.ServletContainer;
 //import org.semanticweb.owlapi.apibinding.OWLManager;
 //import org.semanticweb.owlapi.model.OWLOntology;
 //import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -24,14 +19,11 @@ import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
+        import org.xml.sax.SAXException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.xml.parsers.DocumentBuilder;
+        import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
@@ -43,9 +35,6 @@ import java.io.File;
 import java.io.IOException;
 
 import OntologyRestApi.model.ReqModel;
-import com.sun.corba.se.spi.ior.ObjectKey;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.eclipse.jetty.server.Response;
 //import org.json.*;
 //import org.swrlapi.factory.SWRLAPIFactory;
 //import org.swrlapi.parser.SWRLParseException;
@@ -55,7 +44,6 @@ import org.eclipse.jetty.server.Response;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 //import org.semanticweb.owlapi.apibinding.OWLManager;
 //import org.semanticweb.owlapi.model.OWLOntology;
 //import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -65,25 +53,10 @@ import org.xml.sax.SAXException;
 //import org.swrlapi.sqwrl.SQWRLQueryEngine;
 //import org.swrlapi.sqwrl.SQWRLResult;
 //import org.swrlapi.sqwrl.exceptions.SQWRLException;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
 
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ws.rs.core.Response.Status;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+        import javax.ws.rs.*;
+        import java.util.ArrayList;
 
 @Path("home")
 public class Resource {
@@ -130,7 +103,14 @@ public class Resource {
                         ,@QueryParam("hasreacau") String hasReaCau
                         ,@QueryParam("hasintentother") String hasIntentOther
                         ,@QueryParam("hasactheedless") String hasActHeedless
-                        ,@QueryParam("hasactheedlesseng") String hasActHeedLessEng){
+                        ,@QueryParam("hasactheedlesseng") String hasActHeedLessEng
+                        ,@QueryParam("hasdanger") String hasDanger
+                        ,@QueryParam("hasdangerimn") String hasDangerImn
+                        ,@QueryParam("haslawfuldef") String hasLawfulDef
+                        ,@QueryParam("hasdefending") String hasDefending
+                        ,@QueryParam("haspureassent") String hasPureAssent
+                        ,@QueryParam("hasassentgoodmoral") String hasAssentGoodMoral
+                        ,@QueryParam("hasassentduringcrime") String hasAssentDuringCrime){
 
         ReqModel req = new ReqModel();
         req.setNojust(nojust);
@@ -166,10 +146,18 @@ public class Resource {
 
         // Jusification
         req.setAssent(assent);
-        req.setDefendin(defend);
+        req.setDefending(defend);
         req.setActIsLawfulDefense(actIsLawful);
         req.setDangerToBeImminent(dangerToBeImminent);
         req.setDanger(danger);
+        req.setHasDanger(hasDanger);
+        req.setHasDangerImn(hasDangerImn);
+        req.setHasDefending(hasDefending);
+        req.setHasLawfulDef(hasLawfulDef);
+        req.setHasPureAssent(hasPureAssent);
+        req.setHasAssentGoodMoral(hasAssentGoodMoral);
+        req.setHasAssentDuringCrime(hasAssentDuringCrime);
+
 
         // Intention
         req.setHasforeeffect(hasforeeffect);
@@ -229,7 +217,11 @@ public class Resource {
             // intention
 
 
-            //VICTIM
+            // *************************
+            //
+            // Gathering intention for Victim
+            //
+            // *************************
 
             if(input.getVictim() != null) {
                 victim.setAttribute("rdf:ID",input.getVictim() );
@@ -254,7 +246,11 @@ public class Resource {
                 }
             }
 
-            //Action
+            // *************************
+            //
+            // Gathering intention for Action
+            //
+            // *************************
 
             if(input.getCrimeSucceed() != null && input.getCrimeSucceed() != ""){
                 off.appendChild(take);
@@ -272,14 +268,69 @@ public class Resource {
                 Consider.appendChild(with);
             }
 
-            //OFFENDER
+            // *************************
+            //
+            // Gathering intention for OFFENDER
+            //
+            // *************************
 
             if(input.getOffender() != null){
                 off.setAttribute("rdf:ID",input.getOffender());
                 has_actor.setAttribute("rdf:resource","#"+input.getOffender());
             }
 
-            // Gathering intention
+            // *************************
+            //
+            // Gathering Justification
+            //
+            // *************************
+
+            // Defending
+
+            String hasDanger = "";
+            String hasDangerImn = "";
+            String hasLawfulDef = "";
+            String hasDefending = "";
+            String hasAssentPure = "";
+            String hasAssentDuringCrime = "";
+            String hasAssentGoodMoral = "";
+
+            if(input.getHasLawfulDef() != null) {
+                hasLawfulDef = input.getHasLawfulDef();
+            }
+            if(input.getHasDefending() != null) {
+                hasDefending = input.getHasDefending();
+            }
+            if(input.getHasDangerImn() != null) {
+                hasDangerImn = input.getHasDangerImn();
+            }
+            if(input.getHasDanger() != null) {
+                hasDanger = input.getHasDanger();
+            }
+            if(input.getHasPureAssent() != null) {
+                hasAssentPure = input.getHasPureAssent();
+            }
+            if(input.getHasAssentDuringCrime() != null) {
+                hasAssentDuringCrime = input.getHasAssentDuringCrime();
+            }
+            if(input.getHasAssentGoodMoral() != null) {
+                hasAssentGoodMoral = input.getHasAssentGoodMoral();
+            }
+
+
+            String hasJustification = this.findJustification(hasDanger, hasDangerImn, hasLawfulDef, hasDefending, hasAssentPure, hasAssentDuringCrime, hasAssentGoodMoral);
+
+            if(hasJustification != null && hasJustification!= "")  {
+                con_jus.setAttribute("rdf:resource","#" + hasJustification);
+            }
+
+
+            // *************************
+            //
+            // Gathering intention for subjective of element
+            //
+            // *************************
+
             String hasintact = "";
             String hasforeeffect = "";
             String hasreaact = "";
@@ -313,6 +364,7 @@ public class Resource {
 
             System.out.println(hasIntention);
 
+
             if(hasIntention == "intentionx"){
                 has_sub.setAttribute("rdf:resource","#Intentionx");
                 rwse.setAttribute("rdf:resource","#Intentionx");
@@ -322,8 +374,11 @@ public class Resource {
                 rwse.setAttribute("rdf:resource","#Negli_intention");
             }
 
-
-            // Finish Gathering intention
+            // *************************
+            //
+            // Gathering intention for Objective element
+            //
+            // *************************
 
 
             //OBJECTIVE ELEMENT
@@ -337,7 +392,11 @@ public class Resource {
             obj_elem.appendChild(has_additional);
             obj_elem.appendChild(rwse);
 
-            //ELEMENT OF CRIME
+            // *************************
+            //
+            // Gathering intention for Element of crime
+            //
+            // *************************
 
             eoc.setAttribute("rdf:ID","eoc288");
 
@@ -345,19 +404,10 @@ public class Resource {
                 con_cri_im.setAttribute("rdf:resource","#"+input.getNoCriminalImpunity());
             }
 
-            if(input.getNojust()!= null){
-                con_jus.setAttribute("rdf:resource","#"+input.getNojust());
-            }
-
             if(input.getCausation() != null){
                 has_cau.setAttribute("rdf:resource","#"+input.getCausation() );
             }
 
-            // Subjective element
-//            if(input.getIntentionallyAct() != null){
-//                has_sub.setAttribute("rdf:resource","#"+input.getIntentionallyAct());
-//                rwse.setAttribute("rdf:resource","#"+input.getIntentionallyAct());
-//            }
 
             if(input.getNoIntention() != null){
                 has_sub.setAttribute("rdf:resource","#"+input.getNoIntention());
@@ -509,6 +559,110 @@ public class Resource {
             sae.printStackTrace();
         }
         return "No intention";
+    }
+
+    public String findJustification(String hasDanger, String  hasDangerImn , String hasLawfulDef, String hasDefending, String hasAssentPure, String hasAssentDuringCrime, String hasAssentGoodMoral){
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse("ontology/2309-original.owl");
+
+            Element def_elem = doc.createElement("Defending");
+            Element consider_justification = doc.createElement("consider_justification");
+            Element has_danger = doc.createElement("has_danger");
+            Element has_danger_imn = doc.createElement("has_danger_imn");
+            Element has_lawful_def = doc.createElement("has_lawful_def");
+            Element has_defending = doc.createElement("has_defending");
+
+            Element has_pure_assent = doc.createElement("has_pure_assent");
+            Element has_assent_during_crime = doc.createElement("has_assent_during_crime");
+            Element has_assent_good_moral = doc.createElement("has_assent_good_moral");
+
+            def_elem.setAttribute("rdf:ID","Defending_Obj");
+            consider_justification.setAttribute("rdf:resource","#Defending_Obj");
+
+            if(hasDanger != "")
+                has_danger.setAttribute("rdf:resource","#"+hasDanger);
+            if(hasDangerImn != "")
+                has_danger_imn.setAttribute("rdf:resource","#"+hasDangerImn);
+            if(hasLawfulDef != "")
+                has_lawful_def.setAttribute("rdf:resource","#"+hasLawfulDef);
+            if(hasDefending != "")
+                has_defending.setAttribute("rdf:resource","#"+hasDefending);
+            if(hasAssentPure != "")
+                has_pure_assent.setAttribute("rdf:resource","#"+hasAssentPure);
+            if(hasAssentDuringCrime != "")
+                has_assent_during_crime.setAttribute("rdf:resource","#"+hasAssentDuringCrime);
+            if(hasAssentGoodMoral != "")
+                has_assent_good_moral.setAttribute("rdf:resource","#"+hasAssentGoodMoral);
+
+            def_elem.appendChild(has_danger);
+            def_elem.appendChild(has_danger_imn);
+            def_elem.appendChild(has_lawful_def);
+            def_elem.appendChild(has_defending);
+            def_elem.appendChild(has_pure_assent);
+            def_elem.appendChild(has_assent_during_crime);
+            def_elem.appendChild(has_assent_good_moral);
+
+            // Adhoc
+            Element eoc = doc.createElement("ElementOfCrime");
+            eoc.setAttribute("rdf:ID","eoc288");
+            eoc.appendChild(consider_justification);
+
+            Node rootNode = doc.getElementsByTagName("rdf:RDF").item(0);
+            rootNode.appendChild(def_elem);
+            rootNode.appendChild(eoc);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("ontology/justification-defending.owl"));
+            transformer.transform(source, result);
+
+            try {
+                OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+                OWLOntology ontology2 = ontologyManager.loadOntologyFromOntologyDocument(new File("ontology/justification-defending.owl"));
+
+                // Create SQWRL query engine using the SWRLAPI
+                SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology2);
+
+                queryEngine.createSQWRLQuery("Justification-defending","consider_justification(?a, ?b) ^ has_danger(?b, ?c) ^ has_danger_imn(?b, ?d) ^ has_lawful_def(?b, ?e) ^  has_defending(?b, ?f) ^ sameAs(?x, Defending_Obj) ^ Defending(Defending_Obj) ->  sqwrl:select(?a)");
+                queryEngine.createSQWRLQuery("Justification-assent","consider_justification(?a, ?b) ^ has_pure_assent(?b, ?c) ^ has_assent_good_moral(?b, ?d) ^  has_assent_during_crime(?b, ?e) ^ sameAs(?x, Assent01) ^ Assent(Assent01) ->  sqwrl:select(?x)");
+                SQWRLResult Just_Defending = queryEngine.runSQWRLQuery("Justification-defending");
+                SQWRLResult Just_Assent = queryEngine.runSQWRLQuery("Justification-assent");
+
+                if ( Just_Defending.next()) {
+                   return "Justification-defending";
+                }
+                if ( Just_Assent.next()) {
+                    return "Justification-assent";
+                }
+
+            } catch (OWLOntologyCreationException e) {
+                System.err.println("Error creating OWL ontology: " + e.getMessage());
+                System.exit(-1);
+            } catch (SWRLParseException e) {
+                System.err.println("Error parsing SWRL rule or SQWRL query: " + e.getMessage());
+                System.exit(-1);
+            } catch (SQWRLException e) {
+                System.err.println("Error running SWRL rule or SQWRL query: " + e.getMessage());
+                System.exit(-1);
+            } catch (RuntimeException e) {
+
+                System.exit(-1);
+                System.err.println("Error starting application: " + e.getMessage());
+            }
+
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        } catch (TransformerException tfe) {
+            tfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (SAXException sae) {
+            sae.printStackTrace();
+        }
+        return "No_just";
     }
 
 

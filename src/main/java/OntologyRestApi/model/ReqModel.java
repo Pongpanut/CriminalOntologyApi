@@ -32,11 +32,73 @@ public class ReqModel {
     private String necessity;
 
     // Jusification
+    //  Defending
     private String assent;
-    private String defendin;
+    private String defending;
     private String actIsLawfulDefense;
     private String dangerToBeImminent;
     private String danger;
+    private String hasDanger;
+    private String hasDangerImn;
+    private String hasLawfulDef;
+    private String hasDefending;
+    //  Assent
+    private String hasPureAssent;
+    private String hasAssentGoodMoral;
+    private String hasAssentDuringCrime;
+
+
+    public  String getHasPureAssent() {
+        return hasPureAssent;
+    }
+    public void   setHasPureAssent(String hasPureAssent) {
+        this.hasPureAssent = hasPureAssent;
+    }
+    public String getHasAssentGoodMoral() {
+        return hasAssentGoodMoral;
+    }
+    public void   setHasAssentGoodMoral(String hasAssentGoodMoral) {
+        this.hasAssentGoodMoral = hasAssentGoodMoral;
+    }
+    public String getHasAssentDuringCrime() {
+        return hasAssentDuringCrime;
+    }
+    public void   setHasAssentDuringCrime(String hasAssentDuringCrime) {
+        this.hasAssentDuringCrime = hasAssentDuringCrime;
+    }
+
+
+    public String getHasDanger() {
+        return hasDanger;
+    }
+
+    public void setHasDanger(String hasDanger) {
+        this.hasDanger = hasDanger;
+    }
+
+    public String getHasDangerImn() {
+        return hasDangerImn;
+    }
+
+    public void setHasDangerImn(String hasDangerImn) {
+        this.hasDangerImn = hasDangerImn;
+    }
+
+    public String getHasLawfulDef() {
+        return hasLawfulDef;
+    }
+
+    public void setHasLawfulDef(String hasLawfulDef) {
+        this.hasLawfulDef = hasLawfulDef;
+    }
+
+    public String getHasDefending() {
+        return hasDefending;
+    }
+
+    public void setHasDefending(String hasDefending) {
+        this.hasDefending = hasDefending;
+    }
 
     // Intention
     private String hasforeeffect;
@@ -331,12 +393,12 @@ public class ReqModel {
         this.assent = assent;
     }
 
-    public String getDefendin() {
-        return defendin;
+    public String getDefending() {
+        return defending;
     }
 
-    public void setDefendin(String defendin) {
-        this.defendin = defendin;
+    public void setDefending(String defending) {
+        this.defending = defending;
     }
 
     public String getActIsLawfulDefense() {

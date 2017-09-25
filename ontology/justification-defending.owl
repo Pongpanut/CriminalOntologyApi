@@ -328,4 +328,4 @@
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 <TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<ObjectiveElement rdf:ID="ObjElem288"><has_fore_effect/><has_int_act/><has_rea_act rdf:resource="#reaact"/><has_rea_cau rdf:resource="#reacau"/><has_act_heedless/><has_act_heedless_eng rdf:resource="#actheedlesseng"/><has_intent_other rdf:resource="#intentother"/></ObjectiveElement></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<Defending rdf:ID="Defending_Obj"><has_danger rdf:resource="#Danger_2"/><has_danger_imn rdf:resource="#Danger_to_be_imminent_3"/><has_lawful_def rdf:resource="#Act_is_a_lawful_defense_4"/><has_defending rdf:resource="#Defending_own_right_5"/><has_pure_assent rdf:resource="#Assent_pure_13"/><has_assent_during_crime rdf:resource="#Assent_during_crime_15"/><has_assent_good_moral rdf:resource="#Assent_with_good_moral_14"/></Defending><ElementOfCrime rdf:ID="eoc288"><consider_justification rdf:resource="#Defending_Obj"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

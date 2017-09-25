@@ -127,6 +127,15 @@
   <owl:Class rdf:ID="Considering">
     <rdfs:subClassOf rdf:resource="#Action"/>
   </owl:Class>
+   <owl:Class rdf:ID="Assent_pure">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+   <owl:Class rdf:ID="Assent_during_crime">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Assent_with_good_moral">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
   <owl:Class rdf:ID="Attemp">
     <rdfs:subClassOf rdf:resource="#Action"/>
   </owl:Class>
@@ -139,6 +148,18 @@
   <owl:Class rdf:ID="Innocent">
     <rdfs:subClassOf rdf:resource="#Actor"/>
   </owl:Class>
+   <owl:ObjectProperty rdf:ID="has_pure_assent">
+    <rdfs:range rdf:resource="#Assent_pure"/>
+    <rdfs:domain rdf:resource="#Assent"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_assent_during_crime">
+    <rdfs:range rdf:resource="#Assent_during_crime"/>
+    <rdfs:domain rdf:resource="#Assent"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_assent_good_moral">
+    <rdfs:range rdf:resource="#Assent_with_good_moral"/>
+    <rdfs:domain rdf:resource="#Assent"/>
+  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="has_defending">
     <rdfs:domain rdf:resource="#Defending"/>
     <rdfs:range rdf:resource="#Defending_own_right"/>
@@ -274,6 +295,13 @@
   <relizedcause rdf:ID="reacau"/>
   <relizedactivity rdf:ID="reaact"/>
   <Intentionallyact rdf:ID="intact"/>
+
+  <!-- Justification -->
+  <Defending rdf:ID="Defending_1"/>
+  <Danger rdf:ID="Danger_2"/>
+  <Defending_own_right rdf:ID="Defending_own_right_5"/>
+  <Act_is_a_lawful_defense rdf:ID="Act_is_a_lawful_defense_4"/>
+  <Danger_to_be_imminent rdf:ID="Danger_to_be_imminent_3"/>
 
   <act_heedless rdf:ID="act_heedless_obj"/>
   <intent_other rdf:ID="intent_other_obj"/> 
