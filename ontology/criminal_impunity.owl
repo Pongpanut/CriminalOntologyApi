@@ -395,6 +395,8 @@
   <Intentionallyact rdf:ID="intact"/>
 
   <!-- Criminal Impunity-->
+  <ActWithOrder rdf:ID="ActWithOrder_ins"/>
+  <MentalInfirmly rdf:ID="MentalInfirmly_ins"/>
   <LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"/>
   <Cri_age rdf:ID="Cri_age_15"/>
   <Cri_situation rdf:ID="Cri_situation_16"/>
@@ -410,8 +412,9 @@
   <Cri_dont_need rdf:ID="Cri_dont_need_26"/>
   <Cri_limit rdf:ID="Cri_limit_27"/>
   <Cri_protecetd rdf:ID="Cri_protecetd_28"/>
+  <Cri_mental_infirmly rdf:ID="Cri_mental_infirmly_46"/>
 
-  
+
   <!-- Justification -->
   <Defending rdf:ID="Defending_1"/>
   <Danger rdf:ID="Danger_2"/>
@@ -439,7 +442,6 @@
 <Entrapment rdf:ID="Entrapment_ins"/>
 <No_Intention rdf:ID="No_Intention_obj"/>
 <Intention rdf:ID="Intentionx"/>
-<MentalInfirmly rdf:ID="MentalInfirmly_ins"/>
 <RelationWithVictim rdf:ID="rvm_by_law"/>
 <Intoxication rdf:ID="Intoxication_ins"/>
 <CrimeSucceed rdf:ID="harm"/>
@@ -460,4 +462,4 @@
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 <TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<Defending rdf:ID="Defending_Obj"><has_danger rdf:resource="#Danger_2"/><has_danger_imn rdf:resource="#Danger_to_be_imminent_3"/><has_lawful_def rdf:resource="#Act_is_a_lawful_defense_4"/><has_defending rdf:resource="#Defending_own_right_5"/><has_pure_assent rdf:resource="#Assent_pure_13"/><has_assent_during_crime rdf:resource="#Assent_during_crime_15"/><has_assent_good_moral rdf:resource="#Assent_with_good_moral_14"/></Defending><ElementOfCrime rdf:ID="eoc288"><consider_justification rdf:resource="#Defending_Obj"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"><has_age rdf:resource="#Cri_age_15"/></LessThanFifthteenYears><MentalInfirmly rdf:ID="MentalInfirmly_ins"><has_sit rdf:resource="#Cri_situation_16"/><has_mind rdf:resource="#Cri_mind_17"/><has_mental_infirmly rdf:resource="#Cri_mental_infirmly_46"/></MentalInfirmly><Intoxication rdf:ID="Intoxication_ins"><has_sit rdf:resource="#Cri_situation_16"/><has_mind rdf:resource="#Cri_mind_17"/><has_drunk rdf:resource="#Cri_drunk_18"/><has_cause_drunk rdf:resource="#Cri_cause_drunk_19"/></Intoxication><Necessity rdf:ID="Necessity_ins"><has_be_forces rdf:resource="#Cri_be_forces_24"/><has_cannot_avoid rdf:resource="#Cri_cannot_avoid_25"/><has_dont_need rdf:resource="#Cri_dont_need_26"/><has_limit rdf:resource="#Cri_limit_27"/><has_protecetd rdf:resource="#Cri_protecetd_28"/></Necessity><ActWithOrder rdf:ID="ActWithOrder_ins"><has_act_by_officer_com rdf:resource="#Cri_act_by_officer_com_20"/><has_illigal_command rdf:resource="#Cri_illigal_command_21"/><has_dont_know_illigal rdf:resource="#Cri_dont_know_illigal_22"/><has_need_action rdf:resource="#Cri_need_action_23"/></ActWithOrder></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

@@ -1,4 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.owl-ontologies.com/law02122017.owl#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#" xmlns:swrl="http://www.w3.org/2003/11/swrl#" xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#" xmlns:swrlb="http://www.w3.org/2003/11/swrlb#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#" xml:base="http://www.owl-ontologies.com/law02122017.owl">
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns="http://www.owl-ontologies.com/law02122017.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+  xml:base="http://www.owl-ontologies.com/law02122017.owl">
   <owl:Ontology rdf:about="">
     <owl:imports rdf:resource="http://swrl.stanford.edu/ontologies/3.3/swrla.owl"/>
     <owl:imports rdf:resource="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl"/>
@@ -394,24 +407,6 @@
   <relizedactivity rdf:ID="reaact"/>
   <Intentionallyact rdf:ID="intact"/>
 
-  <!-- Criminal Impunity-->
-  <LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"/>
-  <Cri_age rdf:ID="Cri_age_15"/>
-  <Cri_situation rdf:ID="Cri_situation_16"/>
-  <Cri_mind rdf:ID="Cri_mind_17"/>
-  <Cri_drunk rdf:ID="Cri_drunk_18"/>
-  <Cri_cause_drunk rdf:ID="Cri_cause_drunk_19"/>
-  <Cri_act_by_officer_com rdf:ID="Cri_act_by_officer_com_20"/>
-  <Cri_illigal_command rdf:ID="Cri_illigal_command_21"/>
-  <Cri_dont_know_illigal rdf:ID="Cri_dont_know_illigal_22"/>
-  <Cri_need_action rdf:ID="Cri_need_action_23"/>
-  <Cri_be_forces rdf:ID="Cri_be_forces_24"/>
-  <Cri_cannot_avoid rdf:ID="Cri_cannot_avoid_25"/>
-  <Cri_dont_need rdf:ID="Cri_dont_need_26"/>
-  <Cri_limit rdf:ID="Cri_limit_27"/>
-  <Cri_protecetd rdf:ID="Cri_protecetd_28"/>
-
-  
   <!-- Justification -->
   <Defending rdf:ID="Defending_1"/>
   <Danger rdf:ID="Danger_2"/>
@@ -460,4 +455,6 @@
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 <TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<Defending rdf:ID="Defending_Obj"><has_danger rdf:resource="#Danger_2"/><has_danger_imn rdf:resource="#Danger_to_be_imminent_3"/><has_lawful_def rdf:resource="#Act_is_a_lawful_defense_4"/><has_defending rdf:resource="#Defending_own_right_5"/><has_pure_assent rdf:resource="#Assent_pure_13"/><has_assent_during_crime rdf:resource="#Assent_during_crime_15"/><has_assent_good_moral rdf:resource="#Assent_with_good_moral_14"/></Defending><ElementOfCrime rdf:ID="eoc288"><consider_justification rdf:resource="#Defending_Obj"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

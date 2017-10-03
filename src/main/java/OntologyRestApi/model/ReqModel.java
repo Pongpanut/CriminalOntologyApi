@@ -31,6 +31,31 @@ public class ReqModel {
     private String child;
     private String necessity;
 
+    private String hasAge;
+    private String hasSit;
+    private String hasMind;
+    private String hasMentalInfirmly;
+    private String hasDrunk;
+
+    public String getHasCauseDrunk() {
+        return hasCauseDrunk;
+    }
+
+    public void setHasCauseDrunk(String hasCauseDrunk) {
+        this.hasCauseDrunk = hasCauseDrunk;
+    }
+
+    private String hasCauseDrunk;
+    private String hasActByOfficerCom;
+    private String hasIlligalCommand;
+    private String hasDontKnowIlligal;
+    private String hasNeedAction;
+    private String hasBeForces;
+    private String hasCannotAvoid;
+    private String hasDontNeed;
+    private String hasLimit;
+    private String hasProtecetd;
+
     // Jusification
     //  Defending
     private String assent;
@@ -65,6 +90,120 @@ public class ReqModel {
     }
     public void   setHasAssentDuringCrime(String hasAssentDuringCrime) {
         this.hasAssentDuringCrime = hasAssentDuringCrime;
+    }
+
+
+
+    public String getHasAge() {
+        return hasAge;
+    }
+
+    public void setHasAge(String hasAge) {
+        this.hasAge = hasAge;
+    }
+
+    public String getHasSit() {
+        return hasSit;
+    }
+
+    public void setHasSit(String hasSit) {
+        this.hasSit = hasSit;
+    }
+
+    public String getHasMind() {
+        return hasMind;
+    }
+
+    public void setHasMind(String hasMind) {
+        this.hasMind = hasMind;
+    }
+
+    public String getHasMentalInfirmly() {
+        return hasMentalInfirmly;
+    }
+
+    public void setHasMentalInfirmly(String hasMentalInfirmly) {
+        this.hasMentalInfirmly = hasMentalInfirmly;
+    }
+
+    public String getHasDrunk() {
+        return hasDrunk;
+    }
+
+    public void setHasDrunk(String hasDrunk) {
+        this.hasDrunk = hasDrunk;
+    }
+
+    public String getHasActByOfficerCom() {
+        return hasActByOfficerCom;
+    }
+
+    public void setHasActByOfficerCom(String hasActByOfficerCom) {
+        this.hasActByOfficerCom = hasActByOfficerCom;
+    }
+
+    public String getHasIlligalCommand() {
+        return hasIlligalCommand;
+    }
+
+    public void setHasIlligalCommand(String hasIlligalCommand) {
+        this.hasIlligalCommand = hasIlligalCommand;
+    }
+
+    public String getHasDontKnowIlligal() {
+        return hasDontKnowIlligal;
+    }
+
+    public void setHasDontKnowIlligal(String hasDontKnowIlligal) {
+        this.hasDontKnowIlligal = hasDontKnowIlligal;
+    }
+
+    public String getHasNeedAction() {
+        return hasNeedAction;
+    }
+
+    public void setHasNeedAction(String hasNeedAction) {
+        this.hasNeedAction = hasNeedAction;
+    }
+
+    public String getHasBeForces() {
+        return hasBeForces;
+    }
+
+    public void setHasBeForces(String hasBeForces) {
+        this.hasBeForces = hasBeForces;
+    }
+
+    public String getHasCannotAvoid() {
+        return hasCannotAvoid;
+    }
+
+    public void setHasCannotAvoid(String hasCannotAvoid) {
+        this.hasCannotAvoid = hasCannotAvoid;
+    }
+
+    public String getHasDontNeed() {
+        return hasDontNeed;
+    }
+
+    public void setHasDontNeed(String hasDontNeed) {
+        this.hasDontNeed = hasDontNeed;
+    }
+
+    public String getHasLimit() {
+        return hasLimit;
+    }
+
+    public void setHasLimit(String hasLimit) {
+        this.hasLimit = hasLimit;
+    }
+
+    public String getHasProtecetd() {
+        return hasProtecetd;
+    }
+
+    public void setHasProtecetd(String hasProtecetd) {
+        this.hasProtecetd = hasProtecetd;
     }
 
 

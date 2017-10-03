@@ -19,11 +19,11 @@ import org.swrlapi.parser.SWRLParseException;
 import org.swrlapi.sqwrl.SQWRLQueryEngine;
 import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
-        import org.xml.sax.SAXException;
+import org.xml.sax.SAXException;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-        import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
@@ -53,10 +53,8 @@ import org.w3c.dom.Node;
 //import org.swrlapi.sqwrl.SQWRLQueryEngine;
 //import org.swrlapi.sqwrl.SQWRLResult;
 //import org.swrlapi.sqwrl.exceptions.SQWRLException;
-
-
-        import javax.ws.rs.*;
-        import java.util.ArrayList;
+import javax.ws.rs.*;
+import java.util.ArrayList;
 
 @Path("home")
 public class Resource {
@@ -110,7 +108,23 @@ public class Resource {
                         ,@QueryParam("hasdefending") String hasDefending
                         ,@QueryParam("haspureassent") String hasPureAssent
                         ,@QueryParam("hasassentgoodmoral") String hasAssentGoodMoral
-                        ,@QueryParam("hasassentduringcrime") String hasAssentDuringCrime){
+                        ,@QueryParam("hasassentduringcrime") String hasAssentDuringCrime
+                        ,@QueryParam("hasage") String hasAge
+                        ,@QueryParam("hassit") String hasSit
+                        ,@QueryParam("hasmind") String hasMind
+                        ,@QueryParam("hasmentalinfirmly") String hasMentalInfirmly
+                        ,@QueryParam("hasdrunk") String hasDrunk
+                        ,@QueryParam("hascausedrunk") String hasCauseDrunk
+                        ,@QueryParam("hasactbyofficercom") String hasActByOfficerCom
+                        ,@QueryParam("hasilligalcommand") String hasIlligalCommand
+                        ,@QueryParam("hasdontknowilligal") String hasDontKnowIlligal
+                        ,@QueryParam("hasneedaction") String hasNeedAction
+                        ,@QueryParam("hasbeforces") String hasBeForces
+                        ,@QueryParam("hascannotavoid") String hasCannotAvoid
+                        ,@QueryParam("hasdontneed") String hasDontNeed
+                        ,@QueryParam("haslimit") String hasLimit
+                        ,@QueryParam("hasprotecetd") String hasProtecetd){
+
 
         ReqModel req = new ReqModel();
         req.setNojust(nojust);
@@ -143,6 +157,21 @@ public class Resource {
         req.setMentalInfirmly(mental);
         req.setChild(child);
         req.setNecessity(necessity);
+        req.setHasAge(hasAge);
+        req.setHasSit(hasSit);
+        req.setHasMind(hasMind);
+        req.setHasMentalInfirmly(hasMentalInfirmly);
+        req.setHasDrunk(hasDrunk);
+        req.setHasCauseDrunk(hasCauseDrunk);
+        req.setHasBeForces(hasBeForces);
+        req.setHasCannotAvoid(hasCannotAvoid);
+        req.setHasDontNeed(hasDontNeed);
+        req.setHasLimit(hasLimit);
+        req.setHasProtecetd(hasProtecetd);
+        req.setHasActByOfficerCom(hasActByOfficerCom);
+        req.setHasIlligalCommand(hasIlligalCommand);
+        req.setHasDontKnowIlligal(hasDontKnowIlligal);
+        req.setHasNeedAction(hasNeedAction);
 
         // Jusification
         req.setAssent(assent);
@@ -180,8 +209,8 @@ public class Resource {
         try{
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            //Document doc = docBuilder.parse("ontology/0911-original.owl");
-            Document doc = docBuilder.parse("ontology/2309-original.owl");
+            //Document doc = docBuilder.parse("ontology/2309-original.owl");
+            Document doc = docBuilder.parse("ontology/0210-original.owl");
 
             // Get the staff element by tag name directly
             Node rootNode = doc.getElementsByTagName("rdf:RDF").item(0);
@@ -228,13 +257,11 @@ public class Resource {
                 has_victim.setAttribute("rdf:resource","#"+input.getVictim());
                 with.setAttribute("rdf:resource","#"+input.getVictim());
 
-                //victim.setAttribute("rdf:ID","MissC");
                 if (input.getVictimDetail() != null) ;
                 {
 
                     victim.appendChild(vic_detail);
                     vic_detail.setAttribute("rdf:resource", "#"+input.getVictimDetail());
-                    //vic_detail.setAttribute("rdf:resource","#NoVictimDetail");
                 }
 
                 if (input.getAdditionalDetail() != null) ;
@@ -242,7 +269,6 @@ public class Resource {
                     victim.appendChild(with_add);
                     with_add.setAttribute("rdf:resource", "#"+input.getAdditionalDetail());
                     has_additional.setAttribute("rdf:resource","#"+input.getAdditionalDetail());
-                    //with_add.setAttribute("rdf:resource","#Noadd");
                 }
             }
 
@@ -318,12 +344,90 @@ public class Resource {
             }
 
 
-            String hasJustification = this.findJustification(hasDanger, hasDangerImn, hasLawfulDef, hasDefending, hasAssentPure, hasAssentDuringCrime, hasAssentGoodMoral);
+            String hasJustification = "";//this.findJustification(hasDanger, hasDangerImn, hasLawfulDef, hasDefending, hasAssentPure, hasAssentDuringCrime, hasAssentGoodMoral);
 
             if(hasJustification != null && hasJustification!= "")  {
-                con_jus.setAttribute("rdf:resource","#" + hasJustification);
+                con_jus.setAttribute("rdf:resource","#"     + hasJustification);
             }
 
+
+
+            // *************************
+            //
+            // Gathering Criminal impunity
+            //
+            // *************************
+
+            String hasAge= "";
+            String hasSit= "";
+            String hasMind= "";
+            String hasMentalInfirmly= "";
+            String hasDrunk= "";
+            String hasCauseDrunk= "";
+            String hasBeForces= "";
+            String hasCannotAvoid= "";
+            String hasDontNeed= "";
+            String hasLimit= "";
+            String hasProtecetd= "";
+            String hasActByOfficerCom= "";
+            String hasIlligalCommand= "";
+            String hasDontKnowIlligal= "";
+            String hasNeedAction = "" ;
+
+
+            if(input.getHasAge() != null) {
+                hasAge = input.getHasAge();
+            }
+            if(input.getHasSit() != null) {
+                hasSit = input.getHasSit();
+            }
+            if(input.getHasMind() != null) {
+                hasMind = input.getHasMind();
+            }
+            if(input.getHasMentalInfirmly() != null) {
+                hasMentalInfirmly = input.getHasMentalInfirmly();
+            }
+            if(input.getHasDrunk() != null) {
+                hasDrunk = input.getHasDrunk();
+            }
+            if(input.getHasCauseDrunk() != null) {
+                hasCauseDrunk = input.getHasCauseDrunk();
+            }
+            if(input.getHasBeForces() != null) {
+                hasBeForces = input.getHasBeForces();
+            }
+            if(input.getHasCannotAvoid() != null) {
+                hasCannotAvoid = input.getHasCannotAvoid();
+            }
+            if(input.getHasDontNeed() != null) {
+                hasDontNeed = input.getHasDontNeed();
+            }
+            if(input.getHasLimit() != null) {
+                hasLimit = input.getHasLimit();
+            }
+            if(input.getHasProtecetd() != null) {
+                hasProtecetd = input.getHasProtecetd();
+            }
+            if(input.getHasActByOfficerCom() != null) {
+                hasActByOfficerCom = input.getHasActByOfficerCom();
+            }
+            if(input.getHasIlligalCommand() != null) {
+                hasIlligalCommand = input.getHasIlligalCommand();
+            }
+            if(input.getHasNeedAction() != null) {
+                hasNeedAction = input.getHasNeedAction();
+            }
+            if(input.getHasDontKnowIlligal() != null) {
+                hasDontKnowIlligal = input.getHasDontKnowIlligal();
+            }
+
+            String hasCriminalImpunity= this.findCriminalImpunity(hasAge, hasSit , hasMind, hasMentalInfirmly, hasDrunk, hasCauseDrunk,
+                    hasActByOfficerCom, hasIlligalCommand, hasDontKnowIlligal, hasNeedAction, hasBeForces,
+                    hasCannotAvoid, hasDontNeed, hasLimit, hasProtecetd);
+
+            if(hasCriminalImpunity != null && hasCriminalImpunity!= "")  {
+                con_cri_im.setAttribute("rdf:resource","#"     + hasCriminalImpunity);
+            }
 
             // *************************
             //
@@ -376,7 +480,7 @@ public class Resource {
 
             // *************************
             //
-            // Gathering intention for Objective element
+            // Gathering Objective element
             //
             // *************************
 
@@ -394,7 +498,7 @@ public class Resource {
 
             // *************************
             //
-            // Gathering intention for Element of crime
+            // Gathering Element of crime
             //
             // *************************
 
@@ -458,7 +562,7 @@ public class Resource {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse("ontology/2309-original.owl");
+            Document doc = docBuilder.parse("ontology/0210-original.owl");
 
             Element obj_elem = doc.createElement("ObjectiveElement");
             Element has_fore_effect = doc.createElement("has_fore_effect");
@@ -565,7 +669,7 @@ public class Resource {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse("ontology/2309-original.owl");
+            Document doc = docBuilder.parse("ontology/0210-original.owl");
 
             Element def_elem = doc.createElement("Defending");
             Element consider_justification = doc.createElement("consider_justification");
@@ -663,6 +767,182 @@ public class Resource {
             sae.printStackTrace();
         }
         return "No_just";
+    }
+
+
+    public String findCriminalImpunity(String hasAge, String hasSit , String hasMind, String hasMentalInfirmly, String hasDrunk, String hasCauseDrunk,
+                                       String hasActByOfficerCom, String hasIlligalCommand, String hasDontKnowIlligal, String hasNeedAction, String hasBeForces,
+                                       String hasCannotAvoid, String hasDontNeed, String hasLimit, String hasProtecetd){
+        try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            Document doc = docBuilder.parse("ontology/0210-original.owl");
+
+            Element LessThanFifthteenYears_elem = doc.createElement("LessThanFifthteenYears");
+            Element Intoxication_elem = doc.createElement("Intoxication");
+            Element Necessity_elem = doc.createElement("Necessity");
+            Element ActWithOrder_elem = doc.createElement("ActWithOrder");
+            Element MentalInfirmly_elem = doc.createElement("MentalInfirmly");
+
+
+            Element has_age = doc.createElement("has_age");
+            Element has_sit = doc.createElement("has_sit");
+            Element has_mind = doc.createElement("has_mind");
+            Element has_sit2 = doc.createElement("has_sit");
+            Element has_mind2 = doc.createElement("has_mind");
+            Element has_mental_infirmly = doc.createElement("has_mental_infirmly");
+            Element has_drunk = doc.createElement("has_drunk");
+            Element has_cause_drunk = doc.createElement("has_cause_drunk");
+
+            Element has_be_forces = doc.createElement("has_be_forces");
+            Element has_cannot_avoid = doc.createElement("has_cannot_avoid");
+            Element has_dont_need = doc.createElement("has_dont_need");
+            Element has_limit = doc.createElement("has_limit");
+            Element has_protecetd = doc.createElement("has_protecetd");
+
+            Element has_need_action = doc.createElement("has_need_action");
+            Element has_dont_know_illigal = doc.createElement("has_dont_know_illigal");
+            Element has_illigal_command = doc.createElement("has_illigal_command");
+            Element has_act_by_officer_com = doc.createElement("has_act_by_officer_com");
+
+
+            LessThanFifthteenYears_elem.setAttribute("rdf:ID","LessThanFifthteenYears_ins");
+            Intoxication_elem.setAttribute("rdf:ID","Intoxication_ins");
+            Necessity_elem.setAttribute("rdf:ID","Necessity_ins");
+            ActWithOrder_elem.setAttribute("rdf:ID","ActWithOrder_ins");
+            MentalInfirmly_elem.setAttribute("rdf:ID","MentalInfirmly_ins");
+
+            if(hasAge != "")
+                has_age.setAttribute("rdf:resource","#"+hasAge);
+            if(hasSit != "") {
+                has_sit.setAttribute("rdf:resource", "#" + hasSit);
+                has_sit2.setAttribute("rdf:resource", "#" + hasSit);
+            }
+            if(hasMind != "") {
+                has_mind.setAttribute("rdf:resource", "#" + hasMind);
+                has_mind2.setAttribute("rdf:resource", "#" + hasMind);
+            }
+            if(hasMentalInfirmly != "")
+                has_mental_infirmly.setAttribute("rdf:resource","#"+hasMentalInfirmly);
+            if(hasDrunk != "")
+                has_drunk.setAttribute("rdf:resource","#"+hasDrunk);
+            if(hasCauseDrunk != "")
+                has_cause_drunk.setAttribute("rdf:resource","#"+hasCauseDrunk);
+            if(hasBeForces != "")
+                has_be_forces.setAttribute("rdf:resource","#"+hasBeForces);
+            if(hasCannotAvoid != "")
+                has_cannot_avoid.setAttribute("rdf:resource","#"+hasCannotAvoid);
+            if(hasDontNeed != "")
+                has_dont_need.setAttribute("rdf:resource","#"+hasDontNeed);
+            if(hasLimit != "")
+                has_limit.setAttribute("rdf:resource","#"+hasLimit);
+            if(hasProtecetd != "")
+                has_protecetd.setAttribute("rdf:resource","#"+hasProtecetd);
+            if(hasNeedAction != "")
+                has_need_action.setAttribute("rdf:resource","#"+hasNeedAction);
+            if(hasDontKnowIlligal != "")
+                has_dont_know_illigal.setAttribute("rdf:resource","#"+hasDontKnowIlligal);
+            if(hasIlligalCommand != "")
+                has_illigal_command.setAttribute("rdf:resource","#"+hasIlligalCommand);
+            if(hasActByOfficerCom != "")
+                has_act_by_officer_com.setAttribute("rdf:resource","#"+hasActByOfficerCom);
+
+            LessThanFifthteenYears_elem.appendChild(has_age);
+
+            MentalInfirmly_elem.appendChild(has_sit2);
+            MentalInfirmly_elem.appendChild(has_mind2);
+            MentalInfirmly_elem.appendChild(has_mental_infirmly);
+
+            Intoxication_elem.appendChild(has_sit);
+            Intoxication_elem.appendChild(has_mind);
+            Intoxication_elem.appendChild(has_drunk);
+            Intoxication_elem.appendChild(has_cause_drunk);
+
+            Necessity_elem.appendChild(has_be_forces);
+            Necessity_elem.appendChild(has_cannot_avoid);
+            Necessity_elem.appendChild(has_dont_need);
+            Necessity_elem.appendChild(has_limit);
+            Necessity_elem.appendChild(has_protecetd);
+
+            ActWithOrder_elem.appendChild(has_act_by_officer_com);
+            ActWithOrder_elem.appendChild(has_illigal_command);
+            ActWithOrder_elem.appendChild(has_dont_know_illigal);
+            ActWithOrder_elem.appendChild(has_need_action);
+
+            Node rootNode = doc.getElementsByTagName("rdf:RDF").item(0);
+            rootNode.appendChild(LessThanFifthteenYears_elem);
+            rootNode.appendChild(MentalInfirmly_elem);
+            rootNode.appendChild(Intoxication_elem);
+            rootNode.appendChild(Necessity_elem);
+            rootNode.appendChild(ActWithOrder_elem);
+
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("ontology/criminal_impunity.owl"));
+            transformer.transform(source, result);
+
+            try {
+                OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
+                OWLOntology ontology2 = ontologyManager.loadOntologyFromOntologyDocument(new File("ontology/criminal_impunity.owl"));
+
+                // Create SQWRL query engine using the SWRLAPI
+                SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology2);
+
+                queryEngine.createSQWRLQuery("Cri-Necessity","has_be_forces(?a, ?b) ^ has_cannot_avoid(?a, ?c) ^ has_dont_need(?a, ?d) ^ has_limit(?a, ?e) ^ has_protecetd(?a, ?f) ^  sameAs(?x, Necessity_ins) ->  sqwrl:select(?x)");
+                queryEngine.createSQWRLQuery("Cri_Actdonebyorder","has_act_by_officer_com(?a, ?b) ^ has_illigal_command(?a, ?c) ^ has_dont_know_illigal(?a, ?d) ^ has_need_action(?a, ?e) ^  sameAs(?x, ActWithOrder_ins) ->  sqwrl:select(?x)");
+                queryEngine.createSQWRLQuery("Cri_ChildNotYetOverFiftheen","has_age(?a, ?b) ^ sameAs(?e, LessThanFifthteenYears_ins) ->  sqwrl:select(?b)");
+                queryEngine.createSQWRLQuery("Cri_Intoxication","has_sit(?a, ?b) ^ has_mind(?a, ?c) ^ has_drunk(?a, ?d) ^ has_cause_drunk(?a, ?e) ^ sameAs(?x, Intoxication_ins) ->  sqwrl:select(?x)");
+                queryEngine.createSQWRLQuery("Cri_MentalInfirmly","has_sit(?a, ?b) ^ has_mind(?a, ?c) ^ has_mental_infirmly(?a, ?d) ^ sameAs(?x, MentalInfirmly_ins) ->  sqwrl:select(?x)");
+
+                SQWRLResult Cri_Necessity = queryEngine.runSQWRLQuery("Cri-Necessity");
+                SQWRLResult Cri_Actdonebyorder = queryEngine.runSQWRLQuery("Cri_Actdonebyorder");
+                SQWRLResult Cri_ChildNotYetOverFiftheen = queryEngine.runSQWRLQuery("Cri_ChildNotYetOverFiftheen");
+                SQWRLResult Cri_Intoxication = queryEngine.runSQWRLQuery("Cri_Intoxication");
+                SQWRLResult Cri_MentalInfirmly = queryEngine.runSQWRLQuery("Cri_MentalInfirmly");
+
+                if ( Cri_Necessity.next()) {
+                    return "Cri_Necessity";
+                }
+                if ( Cri_Actdonebyorder.next()) {
+                    return "Cri_Actdonebyorder";
+                }
+                if ( Cri_ChildNotYetOverFiftheen.next()) {
+                    return "Cri_ChildNotYetOverFiftheen";
+                }
+                if ( Cri_Intoxication.next()) {
+                    return "Cri_Intoxication";
+                }
+                if ( Cri_MentalInfirmly.next()) {
+                    return "Cri_MentalInfirmly";
+                }
+
+            } catch (OWLOntologyCreationException e) {
+                System.err.println("Error creating OWL ontology: " + e.getMessage());
+                System.exit(-1);
+            } catch (SWRLParseException e) {
+                System.err.println("Error parsing SWRL rule or SQWRL query: " + e.getMessage());
+                System.exit(-1);
+            } catch (SQWRLException e) {
+                System.err.println("Error running SWRL rule or SQWRL query: " + e.getMessage());
+                System.exit(-1);
+            } catch (RuntimeException e) {
+
+                System.exit(-1);
+                System.err.println("Error starting application: " + e.getMessage());
+            }
+
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        } catch (TransformerException tfe) {
+            tfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (SAXException sae) {
+            sae.printStackTrace();
+        }
+        return "No_Criminal_impunity";
     }
 
 
