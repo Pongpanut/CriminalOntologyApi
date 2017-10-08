@@ -114,8 +114,53 @@
   <owl:Class rdf:ID="Considering">
     <rdfs:subClassOf rdf:resource="#Action"/>
   </owl:Class>
+   <owl:Class rdf:ID="Assent_pure">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+   <owl:Class rdf:ID="Assent_during_crime">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Assent_with_good_moral">
+    <rdfs:subClassOf rdf:resource="#Justification"/>
+  </owl:Class>
   <owl:Class rdf:ID="Attemp">
     <rdfs:subClassOf rdf:resource="#Action"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_age">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+   </owl:Class>
+  <owl:Class rdf:ID="Cri_dont_need">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_act_by_officer_com">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_need_action">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+    <owl:Class rdf:ID="Cri_mind">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_limit">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_dont_know_illigal">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+   <owl:Class rdf:ID="Cri_mind">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+   <owl:Class rdf:ID="Cri_illigal_command">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_protecetd">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_be_forces">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Cri_situation">
+    <rdfs:subClassOf rdf:resource="#CriminalImpunity"/>
   </owl:Class>
   <owl:Class rdf:ID="Intentionallyact">
     <rdfs:subClassOf rdf:resource="#SubjectiveElement"/>
@@ -126,6 +171,18 @@
   <owl:Class rdf:ID="Innocent">
     <rdfs:subClassOf rdf:resource="#Actor"/>
   </owl:Class>
+   <owl:ObjectProperty rdf:ID="has_pure_assent">
+    <rdfs:range rdf:resource="#Assent_pure"/>
+    <rdfs:domain rdf:resource="#Assent"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_assent_during_crime">
+    <rdfs:range rdf:resource="#Assent_during_crime"/>
+    <rdfs:domain rdf:resource="#Assent"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_assent_good_moral">
+    <rdfs:range rdf:resource="#Assent_with_good_moral"/>
+    <rdfs:domain rdf:resource="#Assent"/>
+  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:ID="has_defending">
     <rdfs:domain rdf:resource="#Defending"/>
     <rdfs:range rdf:resource="#Defending_own_right"/>
@@ -240,6 +297,81 @@
     <rdfs:domain rdf:resource="#ObjectiveElement"/>
   </owl:ObjectProperty>
 
+ <owl:ObjectProperty rdf:ID="has_sit">
+    <rdfs:range rdf:resource="#Cri_situation"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#MentalInfirmly"/>
+          <owl:Class rdf:about="#Intoxication"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_age">
+    <rdfs:domain rdf:resource="#LessThanFifthteenYears"/>
+    <rdfs:range rdf:resource="#Cri_age"/>
+  </owl:ObjectProperty>
+   <owl:ObjectProperty rdf:ID="has_mind">
+    <rdfs:range rdf:resource="#Cri_mind"/>
+    <rdfs:domain>
+      <owl:Class>
+        <owl:unionOf rdf:parseType="Collection">
+          <owl:Class rdf:about="#MentalInfirmly"/>
+          <owl:Class rdf:about="#Intoxication"/>
+        </owl:unionOf>
+      </owl:Class>
+    </rdfs:domain>
+  </owl:ObjectProperty>
+   <owl:ObjectProperty rdf:ID="has_mental_infirmly">
+    <rdfs:domain rdf:resource="#MentalInfirmly"/>
+    <rdfs:range rdf:resource="#Cri_mental_infirmly"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_drunk">
+    <rdfs:domain rdf:resource="#Intoxication"/>
+    <rdfs:range rdf:resource="#Cri_drunk"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_cause_drunk">
+    <rdfs:domain rdf:resource="#Intoxication"/>
+    <rdfs:range rdf:resource="#Cri_cause_drunk"/>
+  </owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="has_protecetd">
+    <rdfs:range rdf:resource="#Cri_protecetd"/>
+    <rdfs:domain rdf:resource="#Necessity"/>
+  </owl:ObjectProperty>
+   <owl:ObjectProperty rdf:ID="has_limit">
+    <rdfs:domain rdf:resource="#Necessity"/>
+    <rdfs:range rdf:resource="#Cri_limit"/>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:ID="has_dont_need">
+    <rdfs:range rdf:resource="#Cri_dont_need"/>
+    <rdfs:domain rdf:resource="#Necessity"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_cannot_avoid">
+    <rdfs:domain rdf:resource="#Necessity"/>
+    <rdfs:range rdf:resource="#Cri_cannot_avoid"/>
+  </owl:ObjectProperty>
+    <owl:ObjectProperty rdf:ID="has_be_forces">
+    <rdfs:domain rdf:resource="#Necessity"/>
+    <rdfs:range rdf:resource="#Cri_be_forces"/>
+  </owl:ObjectProperty>
+   <owl:ObjectProperty rdf:ID="has_need_action">
+    <rdfs:domain rdf:resource="#ActWithOrder"/>
+    <rdfs:range rdf:resource="#Cri_need_action"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_dont_know_illigal">
+    <rdfs:domain rdf:resource="#ActWithOrder"/>
+    <rdfs:range rdf:resource="#Cri_dont_know_illigal"/>
+  </owl:ObjectProperty>
+ <owl:ObjectProperty rdf:ID="has_illigal_command">
+    <rdfs:range rdf:resource="#Cri_illigal_command"/>
+    <rdfs:domain rdf:resource="#ActWithOrder"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="has_act_by_officer_com">
+    <rdfs:domain rdf:resource="#ActWithOrder"/>
+    <rdfs:range rdf:resource="#Cri_act_by_officer_com"/>
+  </owl:ObjectProperty>
 
   <RelatedArticle rdf:ID="Section294"/>
   <RelatedArticle rdf:ID="Section293"/>
@@ -257,10 +389,42 @@
   <RelatedArticle rdf:ID="Section300"/>
   <RelatedArticle rdf:ID="Section299"/>
 
+  <!-- Intention-->
   <foreseeneffect rdf:ID="for1"/>
   <relizedcause rdf:ID="reacau"/>
   <relizedactivity rdf:ID="reaact"/>
   <Intentionallyact rdf:ID="intact"/>
+
+  <!-- Criminal Impunity-->
+  <ActWithOrder rdf:ID="ActWithOrder_ins"/>
+  <MentalInfirmly rdf:ID="MentalInfirmly_ins"/>
+  <LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"/>
+  <Cri_age rdf:ID="Cri_age_15"/>
+  <Cri_situation rdf:ID="Cri_situation_16"/>
+  <Cri_mind rdf:ID="Cri_mind_17"/>
+  <Cri_drunk rdf:ID="Cri_drunk_18"/>
+  <Cri_cause_drunk rdf:ID="Cri_cause_drunk_19"/>
+  <Cri_act_by_officer_com rdf:ID="Cri_act_by_officer_com_20"/>
+  <Cri_illigal_command rdf:ID="Cri_illigal_command_21"/>
+  <Cri_dont_know_illigal rdf:ID="Cri_dont_know_illigal_22"/>
+  <Cri_need_action rdf:ID="Cri_need_action_23"/>
+  <Cri_be_forces rdf:ID="Cri_be_forces_24"/>
+  <Cri_cannot_avoid rdf:ID="Cri_cannot_avoid_25"/>
+  <Cri_dont_need rdf:ID="Cri_dont_need_26"/>
+  <Cri_limit rdf:ID="Cri_limit_27"/>
+  <Cri_protecetd rdf:ID="Cri_protecetd_28"/>
+  <Cri_mental_infirmly rdf:ID="Cri_mental_infirmly_46"/>
+
+
+  <!-- Justification -->
+  <Defending rdf:ID="Defending_1"/>
+  <Danger rdf:ID="Danger_2"/>
+  <Defending_own_right rdf:ID="Defending_own_right_5"/>
+  <Act_is_a_lawful_defense rdf:ID="Act_is_a_lawful_defense_4"/>
+  <Danger_to_be_imminent rdf:ID="Danger_to_be_imminent_3"/>
+  <Assent_pure rdf:ID="Assent_pure_13"/>
+  <Assent_with_good_moral rdf:ID="Assent_with_good_moral_14"/>
+  <Assent_during_crime rdf:ID="Assent_during_crime_15"/>
 
   <act_heedless rdf:ID="act_heedless_obj"/>
   <intent_other rdf:ID="intent_other_obj"/> 
@@ -279,10 +443,10 @@
 <Entrapment rdf:ID="Entrapment_ins"/>
 <No_Intention rdf:ID="No_Intention_obj"/>
 <Intention rdf:ID="Intentionx"/>
-<MentalInfirmly rdf:ID="MentalInfirmly_ins"/>
 <RelationWithVictim rdf:ID="rvm_by_law"/>
 <Intoxication rdf:ID="Intoxication_ins"/>
 <CrimeSucceed rdf:ID="harm"/>
+<CrimeSucceed rdf:ID="kill"/>
 <CrimeSucceed rdf:ID="encourage"/>
 <CrimeSucceed rdf:ID="becruel"/>
 <CrimeSucceed rdf:ID="fighting"/>
@@ -298,5 +462,6 @@
 <IntentionallyAct rdf:ID="IntentionAct"/>
 <No_justification rdf:ID="No_just"/>
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
+<TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<Victim rdf:ID="missc"><has_victim_detail rdf:resource="#NoVictimDetail"/><with_additional rdf:resource="#Noadd"/></Victim><Offender rdf:ID="petch"><take><Considering rdf:ID="Consider"><with rdf:resource="#missc"/></Considering></take></Offender><ObjectiveElement rdf:ID="ObjElem288"><has_actor rdf:resource="#petch"/><has_action rdf:resource="#Consider"/><has_victim rdf:resource="#missc"/><has_addtional rdf:resource="#Noadd"/><related_with_subjective_element rdf:resource="#Negli_intention"/></ObjectiveElement><ElementOfCrime rdf:ID="eoc288"><consider_criminal_impunity rdf:resource="#NoCriminalImpunity_ins"/><consider_justification rdf:resource="#No_just"/><has_subjective_of_element rdf:resource="#Negli_intention"/><has_objective_of_element rdf:resource="#ObjElem288"/><has_causation rdf:resource="#victimdied"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<Victim rdf:ID="victim"><has_victim_detail rdf:resource="#NoVictimDetail"/><with_additional rdf:resource="#Noadd"/></Victim><Offender rdf:ID="Offender"><take><CrimeSucceed rdf:ID="kill"><with rdf:resource="#victim"/></CrimeSucceed></take></Offender><ObjectiveElement rdf:ID="ObjElem"><has_actor rdf:resource="#Offender"/><has_action rdf:resource="#kill"/><has_victim rdf:resource="#victim"/><has_addtional rdf:resource="#Noadd"/><related_with_subjective_element rdf:resource="#Intentionx"/></ObjectiveElement><ElementOfCrime rdf:ID="eoc"><consider_criminal_impunity rdf:resource="#NoCriminalImpunity_ins"/><consider_justification rdf:resource="#No_just"/><has_subjective_of_element rdf:resource="#Intentionx"/><has_objective_of_element rdf:resource="#ObjElem"/><has_causation rdf:resource="#victimdied"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

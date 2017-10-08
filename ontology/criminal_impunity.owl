@@ -389,6 +389,7 @@
   <RelatedArticle rdf:ID="Section300"/>
   <RelatedArticle rdf:ID="Section299"/>
 
+  <!-- Intention-->
   <foreseeneffect rdf:ID="for1"/>
   <relizedcause rdf:ID="reacau"/>
   <relizedactivity rdf:ID="reaact"/>
@@ -445,6 +446,7 @@
 <RelationWithVictim rdf:ID="rvm_by_law"/>
 <Intoxication rdf:ID="Intoxication_ins"/>
 <CrimeSucceed rdf:ID="harm"/>
+<CrimeSucceed rdf:ID="kill"/>
 <CrimeSucceed rdf:ID="encourage"/>
 <CrimeSucceed rdf:ID="becruel"/>
 <CrimeSucceed rdf:ID="fighting"/>
@@ -462,4 +464,4 @@
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 <TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"><has_age rdf:resource="#Cri_age_15"/></LessThanFifthteenYears><MentalInfirmly rdf:ID="MentalInfirmly_ins"><has_sit rdf:resource="#Cri_situation_16"/><has_mind rdf:resource="#Cri_mind_17"/><has_mental_infirmly rdf:resource="#Cri_mental_infirmly_46"/></MentalInfirmly><Intoxication rdf:ID="Intoxication_ins"><has_sit rdf:resource="#Cri_situation_16"/><has_mind rdf:resource="#Cri_mind_17"/><has_drunk rdf:resource="#Cri_drunk_18"/><has_cause_drunk rdf:resource="#Cri_cause_drunk_19"/></Intoxication><Necessity rdf:ID="Necessity_ins"><has_be_forces rdf:resource="#Cri_be_forces_24"/><has_cannot_avoid rdf:resource="#Cri_cannot_avoid_25"/><has_dont_need rdf:resource="#Cri_dont_need_26"/><has_limit rdf:resource="#Cri_limit_27"/><has_protecetd rdf:resource="#Cri_protecetd_28"/></Necessity><ActWithOrder rdf:ID="ActWithOrder_ins"><has_act_by_officer_com rdf:resource="#Cri_act_by_officer_com_20"/><has_illigal_command rdf:resource="#Cri_illigal_command_21"/><has_dont_know_illigal rdf:resource="#Cri_dont_know_illigal_22"/><has_need_action rdf:resource="#Cri_need_action_23"/></ActWithOrder></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"><has_age/></LessThanFifthteenYears><MentalInfirmly rdf:ID="MentalInfirmly_ins"><has_sit/><has_mind/><has_mental_infirmly/></MentalInfirmly><Intoxication rdf:ID="Intoxication_ins"><has_sit/><has_mind/><has_drunk/><has_cause_drunk/></Intoxication><Necessity rdf:ID="Necessity_ins"><has_be_forces/><has_cannot_avoid/><has_dont_need/><has_limit/><has_protecetd/></Necessity><ActWithOrder rdf:ID="ActWithOrder_ins"><has_act_by_officer_com rdf:resource="#Cri_act_by_officer_com_20"/><has_illigal_command/><has_dont_know_illigal/><has_need_action/></ActWithOrder></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

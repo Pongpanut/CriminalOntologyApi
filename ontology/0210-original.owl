@@ -402,6 +402,7 @@
   <RelatedArticle rdf:ID="Section300"/>
   <RelatedArticle rdf:ID="Section299"/>
 
+  <!-- Intention-->
   <foreseeneffect rdf:ID="for1"/>
   <relizedcause rdf:ID="reacau"/>
   <relizedactivity rdf:ID="reaact"/>
@@ -458,6 +459,7 @@
 <RelationWithVictim rdf:ID="rvm_by_law"/>
 <Intoxication rdf:ID="Intoxication_ins"/>
 <CrimeSucceed rdf:ID="harm"/>
+<CrimeSucceed rdf:ID="kill"/>
 <CrimeSucceed rdf:ID="encourage"/>
 <CrimeSucceed rdf:ID="becruel"/>
 <CrimeSucceed rdf:ID="fighting"/>

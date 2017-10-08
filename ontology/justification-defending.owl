@@ -389,12 +389,15 @@
   <RelatedArticle rdf:ID="Section300"/>
   <RelatedArticle rdf:ID="Section299"/>
 
+  <!-- Intention-->
   <foreseeneffect rdf:ID="for1"/>
   <relizedcause rdf:ID="reacau"/>
   <relizedactivity rdf:ID="reaact"/>
   <Intentionallyact rdf:ID="intact"/>
 
   <!-- Criminal Impunity-->
+  <ActWithOrder rdf:ID="ActWithOrder_ins"/>
+  <MentalInfirmly rdf:ID="MentalInfirmly_ins"/>
   <LessThanFifthteenYears rdf:ID="LessThanFifthteenYears_ins"/>
   <Cri_age rdf:ID="Cri_age_15"/>
   <Cri_situation rdf:ID="Cri_situation_16"/>
@@ -410,8 +413,9 @@
   <Cri_dont_need rdf:ID="Cri_dont_need_26"/>
   <Cri_limit rdf:ID="Cri_limit_27"/>
   <Cri_protecetd rdf:ID="Cri_protecetd_28"/>
+  <Cri_mental_infirmly rdf:ID="Cri_mental_infirmly_46"/>
 
-  
+
   <!-- Justification -->
   <Defending rdf:ID="Defending_1"/>
   <Danger rdf:ID="Danger_2"/>
@@ -439,10 +443,10 @@
 <Entrapment rdf:ID="Entrapment_ins"/>
 <No_Intention rdf:ID="No_Intention_obj"/>
 <Intention rdf:ID="Intentionx"/>
-<MentalInfirmly rdf:ID="MentalInfirmly_ins"/>
 <RelationWithVictim rdf:ID="rvm_by_law"/>
 <Intoxication rdf:ID="Intoxication_ins"/>
 <CrimeSucceed rdf:ID="harm"/>
+<CrimeSucceed rdf:ID="kill"/>
 <CrimeSucceed rdf:ID="encourage"/>
 <CrimeSucceed rdf:ID="becruel"/>
 <CrimeSucceed rdf:ID="fighting"/>
@@ -460,4 +464,4 @@
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 <TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<Defending rdf:ID="Defending_Obj"><has_danger rdf:resource="#Danger_2"/><has_danger_imn rdf:resource="#Danger_to_be_imminent_3"/><has_lawful_def rdf:resource="#Act_is_a_lawful_defense_4"/><has_defending rdf:resource="#Defending_own_right_5"/><has_pure_assent rdf:resource="#Assent_pure_13"/><has_assent_during_crime rdf:resource="#Assent_during_crime_15"/><has_assent_good_moral rdf:resource="#Assent_with_good_moral_14"/></Defending><ElementOfCrime rdf:ID="eoc288"><consider_justification rdf:resource="#Defending_Obj"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<Defending rdf:ID="Defending_Obj"><has_danger/><has_danger_imn/><has_lawful_def/><has_defending/><has_pure_assent/><has_assent_during_crime/><has_assent_good_moral/></Defending><ElementOfCrime rdf:ID="eoc"><consider_justification rdf:resource="#Defending_Obj"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

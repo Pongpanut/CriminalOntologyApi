@@ -14,11 +14,6 @@ public class ReqModel {
     private String victim;
     private String victimDetail;
     private String additionalDetail;
-    private String transferIntent;
-    private String intentionallyAct;
-    private String foreseenTheEffect;
-    private String negligence;
-    private String noIntention;
     private String causation;
 
     // Criminal Impunity
@@ -30,21 +25,11 @@ public class ReqModel {
     private String mentalInfirmly;
     private String child;
     private String necessity;
-
     private String hasAge;
     private String hasSit;
     private String hasMind;
     private String hasMentalInfirmly;
     private String hasDrunk;
-
-    public String getHasCauseDrunk() {
-        return hasCauseDrunk;
-    }
-
-    public void setHasCauseDrunk(String hasCauseDrunk) {
-        this.hasCauseDrunk = hasCauseDrunk;
-    }
-
     private String hasCauseDrunk;
     private String hasActByOfficerCom;
     private String hasIlligalCommand;
@@ -57,7 +42,7 @@ public class ReqModel {
     private String hasProtecetd;
 
     // Jusification
-    //  Defending
+    ////  Defending
     private String assent;
     private String defending;
     private String actIsLawfulDefense;
@@ -67,10 +52,20 @@ public class ReqModel {
     private String hasDangerImn;
     private String hasLawfulDef;
     private String hasDefending;
-    //  Assent
+    ////  Assent
     private String hasPureAssent;
     private String hasAssentGoodMoral;
     private String hasAssentDuringCrime;
+
+    // Intention
+    private String hasforeeffect;
+    private String hasintact;
+    private String hasreaact;
+    private String hasReaCau;
+    private String hasIntentOther;
+    private String hasActHeedless;
+    private String hasActHeedlessEng;
+
 
 
     public  String getHasPureAssent() {
@@ -93,7 +88,13 @@ public class ReqModel {
     }
 
 
+    public String getHasCauseDrunk() {
+        return hasCauseDrunk;
+    }
 
+    public void setHasCauseDrunk(String hasCauseDrunk) {
+        this.hasCauseDrunk = hasCauseDrunk;
+    }
     public String getHasAge() {
         return hasAge;
     }
@@ -239,14 +240,6 @@ public class ReqModel {
         this.hasDefending = hasDefending;
     }
 
-    // Intention
-    private String hasforeeffect;
-    private String hasintact;
-    private String hasreaact;
-    private String hasReaCau;
-    private String hasIntentOther;
-    private String hasActHeedless;
-    private String hasActHeedlessEng;
 
     public String getHasIntentOther() {
         return hasIntentOther;
@@ -298,15 +291,6 @@ public class ReqModel {
         this.hasReaCau = hasReaCau;
     }
 
-    public String getNojust() {
-        return nojust;
-    }
-
-    public void setNojust(String nojust) {
-        this.nojust = nojust;
-    }
-
-    private String nojust;
 
     public String getOffender() {
         return offender;
@@ -410,46 +394,6 @@ public class ReqModel {
 
     public void setAdditionalDetail(String additionalDetail) {
         this.additionalDetail = additionalDetail;
-    }
-
-    public String getTransferIntent() {
-        return transferIntent;
-    }
-
-    public void setTransferIntent(String transferIntent) {
-        this.transferIntent = transferIntent;
-    }
-
-    public String getIntentionallyAct() {
-        return intentionallyAct;
-    }
-
-    public void setIntentionallyAct(String intentionallyAct) {
-        this.intentionallyAct = intentionallyAct;
-    }
-
-    public String getForeseenTheEffect() {
-        return foreseenTheEffect;
-    }
-
-    public void setForeseenTheEffect(String foreseenTheEffect) {
-        this.foreseenTheEffect = foreseenTheEffect;
-    }
-
-    public String getNegligence() {
-        return negligence;
-    }
-
-    public void setNegligence(String negligence) {
-        this.negligence = negligence;
-    }
-
-    public String getNoIntention() {
-        return noIntention;
-    }
-
-    public void setNoIntention(String noIntention) {
-        this.noIntention = noIntention;
     }
 
     public String getCausation() {
