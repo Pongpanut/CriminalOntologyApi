@@ -464,4 +464,4 @@
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 <TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<ObjectiveElement rdf:ID="ObjElem"><has_fore_effect rdf:resource="#for1"/><has_int_act rdf:resource="#intact"/><has_rea_act rdf:resource="#reaact"/><has_rea_cau rdf:resource="#reacau"/><has_act_heedless/><has_act_heedless_eng/><has_intent_other/></ObjectiveElement></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<ObjectiveElement rdf:ID="ObjElem"><has_fore_effect/><has_int_act rdf:resource="#intact"/><has_rea_act rdf:resource="#reaact"/><has_rea_cau rdf:resource="#reacau"/><has_act_heedless/><has_act_heedless_eng/><has_intent_other/></ObjectiveElement></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->

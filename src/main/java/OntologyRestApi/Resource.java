@@ -21,6 +21,9 @@ import org.swrlapi.sqwrl.SQWRLResult;
 import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import org.xml.sax.SAXException;
 
+import java.io.*;
+import java.util.*;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.xml.parsers.DocumentBuilder;
@@ -31,7 +34,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
 import java.io.IOException;
 
 import OntologyRestApi.model.ReqModel;
@@ -48,17 +50,18 @@ import org.w3c.dom.Node;
 //import org.semanticweb.owlapi.model.OWLOntology;
 //import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 //import org.semanticweb.owlapi.model.OWLOntologyManager;
-//import org.swrlapi.factory.SWRLAPIFactory;
+//import org.swrlapi.factory.SWRLAPIFactory; 
 //import org.swrlapi.parser.SWRLParseException;
 //import org.swrlapi.sqwrl.SQWRLQueryEngine;
 //import org.swrlapi.sqwrl.SQWRLResult;
 //import org.swrlapi.sqwrl.exceptions.SQWRLException;
 import javax.ws.rs.*;
-import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 @Path("home")
 public class Resource {
-
+String justificationStr = "";
+String criminalImpunityStr = "";
 
     @GET
     @Path("/criminalOnt")
@@ -187,8 +190,19 @@ public class Resource {
 
         BuildNewOWL(req);
 
-        String Ans = getData();
-        return Ans;
+        ArrayList<String> Ans = getData("resources/criminalcrime.properties", "ontology/destination.owl");
+        String ans = "";
+        for (String result : Ans) {
+            ans += result;
+            System.out.println("Result is " + result);
+        }
+        System.out.println();
+        if( ans != null && ans != ""){
+            return "มาตราที่เกี่ยวข้องคือ "+ ans + " " + justificationStr + " "+ criminalImpunityStr;
+        }
+        else{
+            return "ไม่ต้องรับคามผิด เนื่องจาก " + justificationStr + " "+ criminalImpunityStr;
+        }
     }
 
 
@@ -234,6 +248,7 @@ public class Resource {
             // intention
 
 
+            // *************************
             // *************************
             //
             // Gathering intention for Victim
@@ -333,10 +348,35 @@ public class Resource {
             }
 
 
-            String hasJustification = this.findJustification(hasDanger, hasDangerImn, hasLawfulDef, hasDefending, hasAssentPure, hasAssentDuringCrime, hasAssentGoodMoral);
+            ArrayList<String> hasJustification = this.findJustification(hasDanger, hasDangerImn, hasLawfulDef, hasDefending, hasAssentPure, hasAssentDuringCrime, hasAssentGoodMoral);
 
-            if(hasJustification != null && hasJustification!= "")  {
-                con_jus.setAttribute("rdf:resource","#"     + hasJustification);
+
+            String ans = "";
+            int indexJust = 0;
+            for (String resultTemp : hasJustification) {
+
+                if(indexJust++ >= 1){
+                    ans += ",";
+                }
+                if(resultTemp.equals("Justification-defending")){
+                    ans += "การป้องกัน ตามประมวลกฎหมายอาญามาตรา 68";
+                }
+                if(resultTemp.equals("Justification-assent")){
+                    ans += "การยินยอม";
+                }
+            }
+
+            if(ans != "") {
+                justificationStr = "เหตุยกเว้นความผิด ได้แก่ " + ans;
+            }
+            else {
+                justificationStr = "ไม่มีเหตุยกเว้นความผิด";
+            }
+            System.out.println(justificationStr);
+            System.out.println();
+
+            if(hasJustification != null && hasJustification.size() > 0)  {
+                con_jus.setAttribute("rdf:resource","#"     + hasJustification.get(0));
             }
 
 
@@ -410,12 +450,48 @@ public class Resource {
                 hasDontKnowIlligal = input.getHasDontKnowIlligal();
             }
 
-            String hasCriminalImpunity= this.findCriminalImpunity(hasAge, hasSit , hasMind, hasMentalInfirmly, hasDrunk, hasCauseDrunk,
+
+            ArrayList<String> hasCriminalImpunity = this.findCriminalImpunity(hasAge, hasSit , hasMind, hasMentalInfirmly, hasDrunk, hasCauseDrunk,
                     hasActByOfficerCom, hasIlligalCommand, hasDontKnowIlligal, hasNeedAction, hasBeForces,
                     hasCannotAvoid, hasDontNeed, hasLimit, hasProtecetd);
 
-            if(hasCriminalImpunity != null && hasCriminalImpunity!= "")  {
-                con_cri_im.setAttribute("rdf:resource","#"     + hasCriminalImpunity);
+
+            String ansCri = "";
+            int indexCri = 0;
+            for (String resultTemp : hasCriminalImpunity) {
+
+                if(indexCri++ > 1){
+                    ansCri += ",";
+                }
+                if(resultTemp.equals("Cri_Necessity")){
+                    ansCri += "ความจำเป็น ตามประมวลกฎหมายอาญามาตรา 67";
+                }
+                if(resultTemp.equals("Cri_Actdonebyorder")){
+                    ansCri += "การความผิดตามคำสั่งที่มิชอบด้วยกฎหมายของเจ้าพนักงาน ตามประมวลกฎหมายอาญามาตรา 70";
+                }
+                if(resultTemp.equals("Cri_ChildNotYetOverFiftheen")){
+                    ansCri += "อายุผู้กระทำความผิดน้อยกว่า 15 ปี  ตามประมวลกฎหมายอาญามาตรา 73,74";
+                }
+                if(resultTemp.equals("Cri_Intoxication")){
+                    ansCri += "การกระทำของผู้มึนเมา ตามประมวลกฎหมายอาญามาตรา 66";
+                }
+                if(resultTemp.equals("Cri_MentalInfirmly")){
+                    ansCri += "การกระทำของคนวิกลจริต ตามประมวลกฎหมายอาญามาตรา 66";
+                }
+            }
+            if(ansCri != "") {
+                criminalImpunityStr = "เหตุยกเว้นโทษ ได้แก่ " + ansCri;
+            }
+            else {
+                criminalImpunityStr = "ไม่มีเหตุยกเว้นโทษ";
+            }
+
+            System.out.println(criminalImpunityStr);
+            System.out.println();
+
+
+            if(hasCriminalImpunity != null && hasCriminalImpunity.size() > 0)  {
+                con_cri_im.setAttribute("rdf:resource","#"     + hasCriminalImpunity.get(0));
             }
 
             // *************************
@@ -648,7 +724,8 @@ public class Resource {
         return "No intention";
     }
 
-    public String findJustification(String hasDanger, String  hasDangerImn , String hasLawfulDef, String hasDefending, String hasAssentPure, String hasAssentDuringCrime, String hasAssentGoodMoral){
+    public ArrayList<String> findJustification(String hasDanger, String  hasDangerImn , String hasLawfulDef, String hasDefending, String hasAssentPure, String hasAssentDuringCrime, String hasAssentGoodMoral){
+        ArrayList<String> resultArr = new ArrayList<String>();
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -706,39 +783,11 @@ public class Resource {
             StreamResult result = new StreamResult(new File("ontology/justification-defending.owl"));
             transformer.transform(source, result);
 
-            try {
-                OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-                OWLOntology ontology2 = ontologyManager.loadOntologyFromOntologyDocument(new File("ontology/justification-defending.owl"));
+            resultArr = getData("resources/justification.properties","ontology/justification-defending.owl");
+            if(resultArr.size() == 0 )
+                resultArr.add("No_just");
 
-                // Create SQWRL query engine using the SWRLAPI
-                SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology2);
 
-                queryEngine.createSQWRLQuery("Justification-defending","consider_justification(?a, ?b) ^ has_danger(?b, ?c) ^ has_danger_imn(?b, ?d) ^ has_lawful_def(?b, ?e) ^  has_defending(?b, ?f) ^ sameAs(?x, Defending_Obj) ^ Defending(Defending_Obj) ->  sqwrl:select(?a)");
-                queryEngine.createSQWRLQuery("Justification-assent","consider_justification(?a, ?b) ^ has_pure_assent(?b, ?c) ^ has_assent_good_moral(?b, ?d) ^  has_assent_during_crime(?b, ?e) ^ sameAs(?x, Assent01) ^ Assent(Assent01) ->  sqwrl:select(?x)");
-                SQWRLResult Just_Defending = queryEngine.runSQWRLQuery("Justification-defending");
-                SQWRLResult Just_Assent = queryEngine.runSQWRLQuery("Justification-assent");
-
-                if ( Just_Defending.next()) {
-                   return "Justification-defending";
-                }
-                if ( Just_Assent.next()) {
-                    return "Justification-assent";
-                }
-
-            } catch (OWLOntologyCreationException e) {
-                System.err.println("Error creating OWL ontology: " + e.getMessage());
-                System.exit(-1);
-            } catch (SWRLParseException e) {
-                System.err.println("Error parsing SWRL rule or SQWRL query: " + e.getMessage());
-                System.exit(-1);
-            } catch (SQWRLException e) {
-                System.err.println("Error running SWRL rule or SQWRL query: " + e.getMessage());
-                System.exit(-1);
-            } catch (RuntimeException e) {
-
-                System.exit(-1);
-                System.err.println("Error starting application: " + e.getMessage());
-            }
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
@@ -749,13 +798,14 @@ public class Resource {
         } catch (SAXException sae) {
             sae.printStackTrace();
         }
-        return "No_just";
+        return resultArr;
     }
 
 
-    public String findCriminalImpunity(String hasAge, String hasSit , String hasMind, String hasMentalInfirmly, String hasDrunk, String hasCauseDrunk,
+    public  ArrayList<String> findCriminalImpunity(String hasAge, String hasSit , String hasMind, String hasMentalInfirmly, String hasDrunk, String hasCauseDrunk,
                                        String hasActByOfficerCom, String hasIlligalCommand, String hasDontKnowIlligal, String hasNeedAction, String hasBeForces,
                                        String hasCannotAvoid, String hasDontNeed, String hasLimit, String hasProtecetd){
+        ArrayList<String> resultArr = new ArrayList<String>();
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
@@ -866,55 +916,9 @@ public class Resource {
             StreamResult result = new StreamResult(new File("ontology/criminal_impunity.owl"));
             transformer.transform(source, result);
 
-            try {
-                OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-                OWLOntology ontology2 = ontologyManager.loadOntologyFromOntologyDocument(new File("ontology/criminal_impunity.owl"));
-
-                // Create SQWRL query engine using the SWRLAPI
-                SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology2);
-
-                queryEngine.createSQWRLQuery("Cri-Necessity","has_be_forces(?a, ?b) ^ has_cannot_avoid(?a, ?c) ^ has_dont_need(?a, ?d) ^ has_limit(?a, ?e) ^ has_protecetd(?a, ?f) ^  sameAs(?x, Necessity_ins) ->  sqwrl:select(?x)");
-                queryEngine.createSQWRLQuery("Cri_Actdonebyorder","has_act_by_officer_com(?a, ?b) ^ has_illigal_command(?a, ?c) ^ has_dont_know_illigal(?a, ?d) ^ has_need_action(?a, ?e) ^  sameAs(?x, ActWithOrder_ins) ->  sqwrl:select(?x)");
-                queryEngine.createSQWRLQuery("Cri_ChildNotYetOverFiftheen","has_age(?a, ?b) ^ sameAs(?e, LessThanFifthteenYears_ins) ->  sqwrl:select(?b)");
-                queryEngine.createSQWRLQuery("Cri_Intoxication","has_sit(?a, ?b) ^ has_mind(?a, ?c) ^ has_drunk(?a, ?d) ^ has_cause_drunk(?a, ?e) ^ sameAs(?x, Intoxication_ins) ->  sqwrl:select(?x)");
-                queryEngine.createSQWRLQuery("Cri_MentalInfirmly","has_sit(?a, ?b) ^ has_mind(?a, ?c) ^ has_mental_infirmly(?a, ?d) ^ sameAs(?x, MentalInfirmly_ins) ->  sqwrl:select(?x)");
-
-                SQWRLResult Cri_Necessity = queryEngine.runSQWRLQuery("Cri-Necessity");
-                SQWRLResult Cri_Actdonebyorder = queryEngine.runSQWRLQuery("Cri_Actdonebyorder");
-                SQWRLResult Cri_ChildNotYetOverFiftheen = queryEngine.runSQWRLQuery("Cri_ChildNotYetOverFiftheen");
-                SQWRLResult Cri_Intoxication = queryEngine.runSQWRLQuery("Cri_Intoxication");
-                SQWRLResult Cri_MentalInfirmly = queryEngine.runSQWRLQuery("Cri_MentalInfirmly");
-
-                if ( Cri_Necessity.next()) {
-                    return "Cri_Necessity";
-                }
-                if ( Cri_Actdonebyorder.next()) {
-                    return "Cri_Actdonebyorder";
-                }
-                if ( Cri_ChildNotYetOverFiftheen.next()) {
-                    return "Cri_ChildNotYetOverFiftheen";
-                }
-                if ( Cri_Intoxication.next()) {
-                    return "Cri_Intoxication";
-                }
-                if ( Cri_MentalInfirmly.next()) {
-                    return "Cri_MentalInfirmly";
-                }
-
-            } catch (OWLOntologyCreationException e) {
-                System.err.println("Error creating OWL ontology: " + e.getMessage());
-                System.exit(-1);
-            } catch (SWRLParseException e) {
-                System.err.println("Error parsing SWRL rule or SQWRL query: " + e.getMessage());
-                System.exit(-1);
-            } catch (SQWRLException e) {
-                System.err.println("Error running SWRL rule or SQWRL query: " + e.getMessage());
-                System.exit(-1);
-            } catch (RuntimeException e) {
-
-                System.exit(-1);
-                System.err.println("Error starting application: " + e.getMessage());
-            }
+            resultArr = getData("resources/criminalimpunity.properties","ontology/criminal_impunity.owl");
+            if(resultArr.size() == 0 )
+                resultArr.add("NoCriminalImpunity_ins");
 
         } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
@@ -925,92 +929,62 @@ public class Resource {
         } catch (SAXException sae) {
             sae.printStackTrace();
         }
-        return "NoCriminalImpunity_ins";
+        return resultArr;
     }
 
 
-    public String getData() {
+//    public static List<String> getPropertyList(Properties properties, String name)
+//    {
+//        List<String> result = new ArrayList<String>();
+//        for (Map.Entry<Object, Object> entry : properties.entrySet())
+//        {
+//            if (((String)entry.getKey()).matches("^" + Pattern.quote(name) + "\\.\\d+$"))
+//            {
+//                result.add((String) entry.getValue());
+//            }
+//        }
+//        return result;
+//    }
+
+    public Map<String, String> extractProperties(String pathName ){
+        Map<String, String> result = null;
+        try{
+            Properties props = new Properties();
+            props.load(new FileInputStream(pathName));
+
+            result = (Map)props;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+        return result;
+    }
+
+
+    public  ArrayList<String>  getData(String propName, String source) {
+        Map<String, String> map =  extractProperties(propName);
+        List keys = new ArrayList(map.keySet());
+        List values = new ArrayList(map.values());
+        ArrayList<String> sectionList = new ArrayList<String>();
 
         String ans = "";
         try {
             // Create an OWL ontology using the OWLAPI
             OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-            OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File("ontology/destination.owl"));
+            OWLOntology ontology = ontologyManager.loadOntologyFromOntologyDocument(new File(source));
 
             // Create SQWRL query engine using the SWRLAPI
             SQWRLQueryEngine queryEngine = SWRLAPIFactory.createSQWRLQueryEngine(ontology);
 
-           // queryEngine.createSQWRLQuery("sec288-old", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, ?x) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, ?x) ^ has_addtional(?k, Noadd) ^ has_victim_detail(?j, NoVictimDetail) ^ IntentionallyAct(?x) ^  sameAs(?e, Section288) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?x, ?e)");
-            queryEngine.createSQWRLQuery("sec288","consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, victimdied) ^  has_actor(?k, ?g) ^ has_action(?k, ?h) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^ related_with_subjective_element(?k, Intentionx)^ has_addtional(?k, Noadd) ^ Intention(Intentionx)  ^ has_victim_detail(?j, NoVictimDetail)  ^  sameAs(?e, Section288) ^ RelatedArticle(?e) -> sqwrl:select(?k, ?g, ?h, ?j, ?e)");
-            queryEngine.createSQWRLQuery("sec289", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z)  ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ Intention(Intentionx) ^ has_addtional(?k, killParent) ^ has_victim_detail(?j, NoVictimDetail) ^ sameAs(?e, Section289) ^ RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e)");
-            queryEngine.createSQWRLQuery("sec290-para1", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, No_Intention_obj) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, No_Intention_obj) ^ has_addtional(?k, Noadd) ^ No_Intention(?l)   ^ has_victim_detail(?j, NoVictimDetail) ^  sameAs(?e, Section290-paragraph1) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
-            queryEngine.createSQWRLQuery("sec290-para2", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, No_Intention_obj) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, No_Intention_obj) ^ has_addtional(?k, killParent) ^ No_Intention(?l)  ^ has_victim_detail(?j, NoVictimDetail)  ^  sameAs(?e, Section290-paragraph2) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
-            queryEngine.createSQWRLQuery("sec291", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Negli_intention) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Negli_intention) ^ has_addtional(?k, Noadd) ^ Negligence(?l) ^ sameAs(?e, Section291) ^  RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?l, ?e)");
-            queryEngine.createSQWRLQuery("sec292", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, becruel)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ has_addtional(?k, VictimKillThemSelf) ^ Intention(Intentionx) ^ has_victim_detail(?j, NoVictimDetail)^ sameAs(?e, Section292) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?e)");
-            queryEngine.createSQWRLQuery("sec293", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, encourage) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ has_addtional(?k, VictimKillThemSelf) ^ Intention(Intentionx)^ has_victim_detail(?j, lessthan16yr)    ^ sameAs(?e, Section293) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?e) ");
-            queryEngine.createSQWRLQuery("sec294", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, victimdied)        ^  has_actor(?k, ?g) ^ has_action(?k, ?h)   ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ has_addtional(?k, Noadd) ^ Intention(Intentionx) ^ has_victim_detail(?j, group_morethan3) ^ sameAs(?e, Section294) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?e)");
-            queryEngine.createSQWRLQuery("sec295", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, injured)           ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ has_addtional(?k, Noadd) ^  Intention(Intentionx) ^ has_victim_detail(?j, NoVictimDetail)  ^ sameAs(?e, Section295) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?e)");
-            queryEngine.createSQWRLQuery("sec296", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, injured)           ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ with_additional(?j, killParent) ^ Intention(Intentionx)^ has_victim_detail(?j, NoVictimDetail) ^ sameAs(?e, Section296) ^ RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e)");
-
-            queryEngine.createSQWRLQuery("sec297", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, seriously_injured) ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ with_additional(?j, Noadd) ^ Intention(Intentionx) ^ has_victim_detail(?j, NoVictimDetail) ^  sameAs(?e, Section297) ^ RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e) ");
-            queryEngine.createSQWRLQuery("sec298", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, seriously_injured) ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ with_additional(?j, killParent) ^ Intention(Intentionx) ^ has_victim_detail(?j, NoVictimDetail)^ sameAs(?e,  Section298-paragraph1) ^  RelatedArticle(?e) ->  sqwrl:select(?g, ?h, ?j, ?e)");
-            queryEngine.createSQWRLQuery("sec299", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Intentionx) ^ has_causation(?n, seriously_injured) ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Intentionx) ^ has_addtional(?k, Noadd) ^ Intention(Intentionx) ^  has_victim_detail(?j, group_morethan3) ^ sameAs(?e, Section299) ^ RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?e)");
-            queryEngine.createSQWRLQuery("sec300", "consider_justification(?n, ?y) ^ No_justification(?y) ^ consider_criminal_impunity(?n, ?z) ^ NoCriminalImpunity(?z) ^ has_objective_of_element(?n, ?k) ^ has_subjective_of_element(?n, Negli_intention) ^ has_causation(?n, seriously_injured) ^  has_actor(?k, ?g) ^ has_action(?k, harm) ^ has_victim(?k, ?j) ^ take(?g, ?h) ^ with(?h, ?j) ^  related_with_subjective_element(?k, Negli_intention) ^ has_addtional(?k, Noadd) ^ Negligence(?l)^ sameAs(?e, Section300) ^  RelatedArticle(?e) ->  sqwrl:select(?k, ?g, ?h, ?j, ?e)");
-
-            SQWRLResult resultSec288 = queryEngine.runSQWRLQuery("sec288");
-            SQWRLResult resultSec289 = queryEngine.runSQWRLQuery("sec289");
-            SQWRLResult resultSec290para1 = queryEngine.runSQWRLQuery("sec290-para1");
-            SQWRLResult resultSec290para2 = queryEngine.runSQWRLQuery("sec290-para2");
-            SQWRLResult resultSec291 = queryEngine.runSQWRLQuery("sec291");
-            SQWRLResult resultSec292 = queryEngine.runSQWRLQuery("sec292");
-            SQWRLResult resultSec293 = queryEngine.runSQWRLQuery("sec293");
-            SQWRLResult resultSec294 = queryEngine.runSQWRLQuery("sec294");
-            SQWRLResult resultSec295 = queryEngine.runSQWRLQuery("sec295");
-            SQWRLResult resultSec296 = queryEngine.runSQWRLQuery("sec296");
-            SQWRLResult resultSec297 = queryEngine.runSQWRLQuery("sec297");
-            SQWRLResult resultSec298 = queryEngine.runSQWRLQuery("sec298");
-            SQWRLResult resultSec299 = queryEngine.runSQWRLQuery("sec299");
-            SQWRLResult resultSec300 = queryEngine.runSQWRLQuery("sec300");
-
-
-            ArrayList<String> sectionList = new ArrayList<String>();
-
-            // Process the SQWRL result
-            if (resultSec288.next())
-                sectionList.add("resultSec288");
-            if (resultSec289.next())
-                sectionList.add("resultSec289");
-            if (resultSec290para1.next())
-                sectionList.add("resultSec290para1");
-            if (resultSec290para2.next())
-                sectionList.add("resultSec290para2");
-            if (resultSec291.next())
-                sectionList.add("resultSec291");
-            if (resultSec292.next())
-                sectionList.add("resultSec292");
-            if (resultSec293.next())
-                sectionList.add("resultSec293");
-            if (resultSec294.next())
-                sectionList.add("resultSec294");
-            if (resultSec295.next())
-                sectionList.add("resultSec295");
-            if (resultSec296.next())
-                sectionList.add("resultSec296");
-            if (resultSec297.next())
-                sectionList.add("resultSec297");
-            if (resultSec298.next())
-                sectionList.add("resultSec298");
-            if (resultSec299.next())
-                sectionList.add("resultSec299");
-            if (resultSec300.next())
-                sectionList.add("resultSec300");
-            for (String result : sectionList) {
-                ans += result;
-                System.out.println("Result is " + result);
+            for (int i = 0; i < map.size(); i++) {
+                String key =  keys.get(i).toString();
+                String value = values.get(i).toString();
+                queryEngine.createSQWRLQuery(key,value);
+                SQWRLResult result = queryEngine.runSQWRLQuery(key);
+                if(result.next()){
+                    sectionList.add(key);
+                }
             }
-            System.out.println();
-            //System.out.println("Answer: " +result.getLiteral("k").getString()+ " "+result.getLiteral("g").getString()+" "+result.getLiteral("h")+" "+result.getLiteral("j")+" "+result.getLiteral("x")+" "+result.getLiteral("e"));
-            // System.out.println("x: " + result.getLiteral("x").getInteger());
 
         } catch (OWLOntologyCreationException e) {
             System.err.println("Error creating OWL ontology: " + e.getMessage());
@@ -1026,6 +1000,6 @@ public class Resource {
             System.exit(-1);
             System.err.println("Error starting application: " + e.getMessage());
         }
-        return ans;
+        return sectionList;
     }
 }
