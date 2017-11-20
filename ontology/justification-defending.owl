@@ -464,4 +464,4 @@
 <NoCriminalImpunity rdf:ID="NoCriminalImpunity_ins"/>
 <TransferIntent rdf:ID="TransferIntent_obj"/>
 
-<Defending rdf:ID="Defending_Obj"><has_danger/><has_danger_imn/><has_lawful_def/><has_defending/><has_pure_assent/><has_assent_during_crime/><has_assent_good_moral/></Defending><ElementOfCrime rdf:ID="eoc"><consider_justification rdf:resource="#Defending_Obj"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
+<Defending rdf:ID="Defending_Obj"><has_danger rdf:resource="#Danger_2"/><has_danger_imn rdf:resource="#Danger_to_be_imminent_3"/><has_lawful_def rdf:resource="#Act_is_a_lawful_defense_4"/><has_defending rdf:resource="#Defending_1"/><has_pure_assent/><has_assent_during_crime/><has_assent_good_moral/></Defending><ElementOfCrime rdf:ID="eoc"><consider_justification rdf:resource="#Defending_Obj"/></ElementOfCrime></rdf:RDF><!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
